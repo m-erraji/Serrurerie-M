@@ -1,0 +1,31 @@
+---
+// Rail de navigation AWC : sommaire des sections, affiché uniquement ≥ 1200 px (voir global.css).
+// Sur mobile, un rail mangerait un quart de l'écran : l'en-tête suffit.
+import Icon from './Icon.astro';
+import type { Lang } from '../config/site';
+import { t } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const d = t(lang);
+const tabs = [
+  { id: 'services', label: d.rail.services, icon: 'wrench' },
+  { id: 'zones', label: d.rail.zones, icon: 'map-pin' },
+  { id: 'faq', label: d.rail.faq, icon: 'help' },
+  { id: 'contact', label: d.rail.contact, icon: 'phone' },
+] as const;
+---
+
+<div class="rail">
+  <md-navigation-rail id="section-rail" label={d.a11y.sections} alignment="top" active-index="-1">
+    {
+      tabs.map((tab) => (
+        <md-navigation-rail-tab label={tab.label} value={tab.id} href={`#${tab.id}`}>
+          <Icon slot="icon" name={tab.icon} />
+        </md-navigation-rail-tab>
+      ))
+    }
+  </md-navigation-rail>
+</div>

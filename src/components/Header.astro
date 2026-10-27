@@ -1,0 +1,119 @@
+---
+import Icon from './Icon.astro';
+import { site, LANGS, type Lang } from '../config/site';
+import { t, pathFor, telHref, dicts, type PageId } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  page: PageId;
+}
+const { lang, page } = Astro.props;
+const d = t(lang);
+---
+
+<md-app-bar class="site-header" variant="small">
+  <a slot="headline" class="logo" href={pathFor({ kind: 'home' }, lang)} aria-label={d.a11y.home}>
+    <Icon name="key" size={28} class="logo__key" />
+    <span class="logo__text" aria-hidden="true">
+      <span>Serrurerie</span>
+      <span class="logo__accent">Marrakech</span>
+    </span>
+  </a>
+
+  <md-icon-button
+    slot="trailing"
+    id="lang-trigger"
+    class="lang-trigger"
+    aria-label={d.a11y.language}
+  >
+    <!-- span : md-icon-button force fill sur ::slotted(svg), ce qui remplirait l'icône au trait -->
+    <span class="lang-trigger__icon"><Icon name="globe" /></span>
+  </md-icon-button>
+
+  <md-button slot="trailing" class="header-call" variant="filled" size="sm" href={telHref} data-cta="header">
+    <Icon slot="leading-icon" name="phone" />
+    <span class="sr-only">{d.header.call} </span><span class="header-call__long" aria-hidden="true">{d.header.call} </span><span class="num">{site.phone.display}</span>
+  </md-button>
+</md-app-bar>
+
+<md-menu id="lang-menu" anchor="lang-trigger" placement="bottom-end" aria-label={d.a11y.language}>
+  {
+    LANGS.map((l) => (
+      <md-menu-item headline={dicts[l].langName} selected={l === lang} data-href={pathFor(page, l)} lang={l} />
+    ))
+  }
+</md-menu>
+
+<style>
+  .site-header {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: var(--md-sys-z-index-app-bar, 100);
+    --md-app-bar-container-color: var(--c-bg);
+    --md-app-bar-container-color-scrolled: var(--c-bg);
+    --md-app-bar-row-height: var(--header-h);
+    --md-app-bar-padding-inline-start: 12px;
+    --md-app-bar-padding-inline-end: 8px;
+    --md-app-bar-trailing-gap: 4px;
+    border-block-end: 1px solid var(--c-line);
+  }
+
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-block-size: 48px;
+    color: var(--c-text);
+    text-decoration: none;
+  }
+
+  .logo__key {
+    color: var(--c-accent);
+    flex: none;
+  }
+
+  .logo__text {
+    display: grid;
+    font: 800 16px/1.05 'Barlow Condensed', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .lang-trigger__icon {
+    display: grid;
+    place-items: center;
+  }
+
+  .logo__accent {
+    color: var(--c-accent);
+  }
+
+  .lang-trigger {
+    --md-icon-button-container-width: 48px;
+    --md-icon-button-container-height: 48px;
+    --md-icon-button-icon-color: var(--c-muted);
+  }
+
+  .header-call {
+    --md-button-min-height: 48px;
+    --md-button-height: 48px;
+  }
+
+  .header-call__long {
+    display: none;
+  }
+
+  /* 360 px : clé masquée, bouton réduit au numéro (le mot « Appeler » reste lu par les lecteurs d'écran). */
+  @media (max-width: 379px) {
+    .logo__key {
+      display: none;
+    }
+  }
+
+  @media (min-width: 520px) {
+    .header-call__long {
+      display: inline;
+      margin-inline-end: 0.3em;
+    }
+  }
+</style>

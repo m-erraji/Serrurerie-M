@@ -1,0 +1,90 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, isPlaceholder, type Lang } from '../config/site';
+import { t } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const d = t(lang);
+const L = site.legal;
+const rows: [string, string][] = [
+  [d.legal.owner, L.owner],
+  [d.legal.status, L.status],
+  [d.legal.ice, L.ice],
+  [d.legal.address, L.address],
+  [d.legal.email, L.email],
+  [d.legal.phone, site.phone.international],
+  [d.legal.host, L.host],
+];
+---
+
+<Base lang={lang} page={{ kind: 'legal' }} title={d.meta.legalTitle} description={d.meta.legalDescription}>
+  <section class="section" aria-labelledby="legal-title">
+    <div class="container legal">
+      <h1 id="legal-title">{d.legal.title}</h1>
+      <md-card variant="outlined" class="legal__card">
+        <dl>
+          {
+            rows.map(([k, v]) => (
+              <div>
+                <dt>{k}</dt>
+                <dd class:list={[isPlaceholder(v) && 'ph', k === d.legal.phone && 'num']}>{v}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </md-card>
+      <h2>{d.legal.data}</h2>
+      <p class="ph">{d.legal.dataText}</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .legal {
+    display: grid;
+    gap: 24px;
+    max-inline-size: 760px;
+  }
+
+  .legal h1 {
+    font-size: clamp(2rem, 9vw, 3rem);
+  }
+
+  .legal h2 {
+    font-size: 1.6rem;
+  }
+
+  .legal__card {
+    --md-card-container-color: var(--c-bg-card);
+    --md-card-outline-color: var(--c-line);
+    --md-card-padding: 8px 20px;
+    display: block;
+  }
+
+  dl {
+    margin: 0;
+  }
+
+  dl div {
+    display: grid;
+    gap: 2px;
+    padding-block: 12px;
+  }
+
+  dl div + div {
+    border-block-start: 1px solid var(--c-line);
+  }
+
+  dt {
+    color: var(--c-muted);
+    font-size: 0.9rem;
+  }
+
+  dd {
+    margin: 0;
+    justify-self: start;
+  }
+</style>

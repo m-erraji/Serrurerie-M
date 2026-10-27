@@ -1,0 +1,23 @@
+{
+  "name": "serrurerie-marrakech",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "dev:demo": "astro dev --mode demo",
+    "build": "astro build",
+    "build:demo": "astro build --mode demo --outDir dist-demo",
+    "preview": "astro preview",
+    "preview:demo": "astro preview --outDir dist-demo",
+    "check": "astro check"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@awc-ui/core": "^1.0.1",
+    "astro": "^7.4.2"
+  }
+}

@@ -1,0 +1,48 @@
+---
+// JSON-LD schema.org Locksmith. N'émet que des informations réelles de la config :
+// horaires et lien Google sont omis tant qu'ils ne sont pas renseignés.
+import { site, type Lang } from '../config/site';
+import { t, absolute, pathFor } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const d = t(lang);
+
+const sameAs = [site.links.googleBusiness].filter(Boolean);
+const data: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': 'Locksmith',
+  '@id': absolute('/#business'),
+  name: site.name,
+  url: absolute(pathFor({ kind: 'home' }, lang)),
+  description: d.meta.homeDescription,
+  telephone: site.phone.e164,
+  image: absolute('/og-image.png'),
+  inLanguage: lang,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Marrakech',
+    addressCountry: 'MA',
+  },
+  areaServed: site.zones.map((z) => ({
+    '@type': 'Place',
+    name: `${z.name.fr}, Marrakech`,
+  })),
+  knowsAbout: site.services.map((s) => s.title[lang]),
+};
+
+if (site.hours.schema.length) {
+  data.openingHoursSpecification = site.hours.schema.map((h) => ({
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: h.days.map((day) => `https://schema.org/${day}`),
+    opens: h.opens,
+    closes: h.closes,
+  }));
+}
+if (sameAs.length) data.sameAs = sameAs;
+if (site.links.googleMaps) data.hasMap = site.links.googleMaps;
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(data)} />

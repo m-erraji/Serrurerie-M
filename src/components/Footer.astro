@@ -1,0 +1,146 @@
+---
+import Icon from './Icon.astro';
+import { site, LANGS, isPlaceholder, type Lang } from '../config/site';
+import { t, pathFor, dicts, type PageId } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  page: PageId;
+}
+const { lang, page } = Astro.props;
+const d = t(lang);
+const hours = site.hours.label[lang];
+---
+
+<footer class="site-footer">
+  <div class="container footer">
+    <div class="footer__brand">
+      <Icon name="key" size={28} />
+      <p>{site.name}</p>
+    </div>
+
+    <dl class="footer__facts">
+      <div>
+        <dt><Icon name="clock" size={18} />{d.footer.hours}</dt>
+        <dd class:list={[isPlaceholder(hours) && 'ph']}>{hours}</dd>
+      </div>
+      <div>
+        <dt><Icon name="map-pin" size={18} />{d.footer.zone}</dt>
+        <dd>{d.footer.zoneValue}</dd>
+      </div>
+    </dl>
+
+    <div class="footer__links">
+      {
+        site.links.googleMaps ? (
+          <md-button variant="text" size="md" href={site.links.googleMaps} target="_blank">
+            <Icon slot="leading-icon" name="map-pin" />
+            {d.footer.maps}
+          </md-button>
+        ) : (
+          <p class="ph">{d.footer.mapsPlaceholder}</p>
+        )
+      }
+      <md-button variant="text" size="md" href={pathFor({ kind: 'legal' }, lang)}>{d.footer.legal}</md-button>
+    </div>
+
+    <!-- Liens de langue en HTML simple : fonctionnent sans JS et sont lus par les moteurs. -->
+    <nav class="footer__langs" aria-label={d.footer.languages}>
+      {
+        LANGS.map((l) => (
+          <a href={pathFor(page, l)} hreflang={l} lang={l} aria-current={l === lang ? 'page' : undefined}>
+            {dicts[l].langName}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-block-start: 1px solid var(--c-line);
+    background: #070b15;
+    padding-block: 40px 24px;
+  }
+
+  .footer {
+    display: grid;
+    gap: 24px;
+  }
+
+  .footer__brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--c-accent);
+  }
+
+  .footer__brand p {
+    font: 800 1.4rem/1 var(--font-title);
+    text-transform: uppercase;
+    color: var(--c-text);
+  }
+
+  .footer__facts {
+    display: grid;
+    gap: 16px;
+    margin: 0;
+  }
+
+  .footer__facts dt {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--c-muted);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .footer__facts dd {
+    margin: 4px 0 0;
+  }
+
+  .footer__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-inline-start: -12px;
+  }
+
+  .footer__links .ph {
+    padding-inline: 12px;
+  }
+
+  .footer__langs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 20px;
+    padding-block-start: 16px;
+    border-block-start: 1px solid var(--c-line);
+  }
+
+  .footer__langs a {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 44px;
+    color: var(--c-muted);
+  }
+
+  .footer__langs a[aria-current='page'] {
+    color: var(--c-text);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  html[lang='ar'] .footer__facts dt {
+    letter-spacing: 0;
+  }
+
+  @media (min-width: 760px) {
+    .footer {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

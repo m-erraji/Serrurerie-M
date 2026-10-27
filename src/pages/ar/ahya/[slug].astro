@@ -1,0 +1,10 @@
+---
+import AreaPage from '../../../components/AreaPage.astro';
+import { AREA_SLUGS, type AreaSlug } from '../../../i18n/utils';
+
+export const getStaticPaths = () => AREA_SLUGS.map((slug) => ({ params: { slug } }));
+
+const slug = Astro.params.slug as AreaSlug;
+---
+
+<AreaPage lang="ar" slug={slug} />

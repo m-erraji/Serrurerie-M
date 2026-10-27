@@ -1,0 +1,91 @@
+---
+import Icon from './Icon.astro';
+import { site, type Lang } from '../config/site';
+import { t } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const d = t(lang);
+const PLACEHOLDER_COUNT = 6;
+---
+
+<section class="section section--alt" aria-labelledby="gallery-title">
+  <div class="container">
+    <div class="section__head">
+      <h2 id="gallery-title">{d.gallery.title}</h2>
+    </div>
+
+    <ul class="gallery" role="list">
+      {
+        site.gallery.length > 0
+          ? site.gallery.map((img) => (
+              <li>
+                <md-card variant="outlined" class="gallery__card">
+                  <img src={img.src} alt={img.alt[lang]} loading="lazy" decoding="async" width="600" height="450" />
+                </md-card>
+              </li>
+            ))
+          : Array.from({ length: PLACEHOLDER_COUNT }, () => (
+              <li>
+                <md-card variant="outlined" class="gallery__card">
+                  <div class="gallery__ph">
+                    <Icon name="image" size={32} />
+                    <span class="ph">{d.gallery.placeholder}</span>
+                  </div>
+                </md-card>
+              </li>
+            ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .gallery {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gallery__card {
+    --md-card-padding: 0;
+    --md-card-outline-color: var(--c-line);
+    --md-card-container-color: var(--c-bg);
+    display: block;
+    overflow: hidden;
+  }
+
+  .gallery__card img {
+    inline-size: 100%;
+    block-size: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  .gallery__ph {
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: 8px;
+    aspect-ratio: 4 / 3;
+    padding: 8px;
+    border: 2px dashed var(--c-placeholder);
+    border-radius: inherit;
+    color: var(--c-muted);
+    text-align: center;
+    font-size: 0.8rem;
+    line-height: 1.25;
+  }
+
+  @media (min-width: 760px) {
+    .gallery {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+  }
+</style>

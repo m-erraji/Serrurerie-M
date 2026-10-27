@@ -1,0 +1,73 @@
+---
+// Jetons AWC UI (--md-sys-*), puis notre thème qui les surcharge.
+import '@awc-ui/core/css/tokens.css';
+import '../styles/global.css';
+
+import Seo from '../components/Seo.astro';
+import LocksmithJsonLd from '../components/LocksmithJsonLd.astro';
+import Analytics from '../components/Analytics.astro';
+import Header from '../components/Header.astro';
+import SectionRail from '../components/SectionRail.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppFab from '../components/WhatsAppFab.astro';
+import { DEMO, type Lang } from '../config/site';
+import { t, dir, type PageId } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  page: PageId;
+  title: string;
+  description: string;
+  /** Rail de sections (accueil uniquement). */
+  rail?: boolean;
+  /** Quartier pour le message WhatsApp pré-rempli. */
+  zone?: string;
+}
+const { lang, page, title, description, rail = false, zone } = Astro.props;
+const d = t(lang);
+
+// Graisses limitées au strict nécessaire (4 fichiers latins) : moins de requêtes, moins de reflow.
+const fonts =
+  'https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;600&display=swap';
+// Arabe : display=optional. Noto Kufi est bien plus haute que les polices arabes système ;
+// un swap tardif décalerait toute la page (CLS mesuré à 0.19). Si elle n'arrive pas à temps,
+// la police arabe du système est gardée pour cette visite, sans saut.
+const arabicFont = 'https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;700&display=optional';
+---
+
+<!doctype html>
+<html lang={lang} dir={dir(lang)} data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0a0f1c" />
+    <meta name="format-detection" content="telephone=no" />
+    {DEMO && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Google Fonts chargé sans bloquer le rendu ; les polices de repli calibrées (global.css) évitent le décalage au swap. -->
+    <link rel="preload" as="style" href={fonts} />
+    <link rel="stylesheet" href={fonts} media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href={fonts} /></noscript>
+    {lang === 'ar' && <link rel="stylesheet" href={arabicFont} media="print" onload="this.media='all'" />}
+    <Seo lang={lang} page={page} title={title} description={description} />
+    <LocksmithJsonLd lang={lang} />
+    <Analytics />
+  </head>
+  <body class:list={[rail && 'has-rail']}>
+    <a class="skip-link" href="#main">{d.a11y.skip}</a>
+    {DEMO && <p class="demo-banner" role="note">{d.demo.banner}</p>}
+    <Header lang={lang} page={page} />
+    {rail && <SectionRail lang={lang} />}
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer lang={lang} page={page} />
+    <WhatsAppFab lang={lang} zone={zone} />
+
+    <script>
+      import '../scripts/awc';
+    </script>
+  </body>
+</html>

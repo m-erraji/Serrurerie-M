@@ -1,0 +1,155 @@
+---
+// Avis clients. Hors démo : uniquement des avis réels (site.reviews), sinon bloc TODO visible.
+// En mode démo, chaque avis porte l'étiquette « Avis fictif ».
+// Aucun aggregateRating n'est émis dans le JSON-LD : Google ne l'accepte pas pour des avis auto-publiés.
+import Icon from './Icon.astro';
+import { site, DEMO, type Lang } from '../config/site';
+import { t, dir } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const d = t(lang);
+const googleLink = site.links.googleReviews || site.links.googleBusiness;
+const reviews = site.reviews;
+---
+
+<section class="section" aria-labelledby="reviews-title">
+  <div class="container">
+    <div class="section__head">
+      <h2 id="reviews-title">{d.reviews.title}</h2>
+    </div>
+
+    {
+      reviews.length > 0 ? (
+        <ul class="reviews-list" role="list">
+          {reviews.map((r) => (
+            <li>
+              <md-card variant="filled" class="review">
+                <div class="review__top">
+                  <span class="review__stars" role="img" aria-label={d.reviews.rating(r.rating)}>
+                    {Array.from({ length: 5 }, (_, i) => (
+                      <Icon name="star" size={18} class={i < r.rating ? 'star star--on' : 'star'} />
+                    ))}
+                  </span>
+                  {DEMO && <span class="review__fake">{d.demo.fakeReview}</span>}
+                </div>
+                <blockquote lang={r.lang} dir={dir(r.lang)}>
+                  <p>{r.text}</p>
+                </blockquote>
+                <p class="review__author">
+                  {r.author} · {r.zone}
+                </p>
+              </md-card>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <md-card variant="outlined" class="reviews-todo">
+          <div class="reviews-todo__text">
+            <Icon name="star" size={28} />
+            <p class="ph">{d.reviews.todo}</p>
+          </div>
+          {!googleLink && <p class="ph">{d.reviews.ctaPlaceholder}</p>}
+        </md-card>
+      )
+    }
+
+    {
+      googleLink && (
+        <md-button class="reviews-cta" variant="outlined" size="md" href={googleLink} target="_blank">
+          {d.reviews.cta}
+        </md-button>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .reviews-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 16px;
+  }
+
+  .reviews-list li {
+    display: flex;
+  }
+
+  .review {
+    --md-card-container-color: var(--c-bg-card);
+    --md-card-padding: 20px;
+    display: grid;
+    gap: 12px;
+    align-content: start;
+    inline-size: 100%;
+  }
+
+  .review__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .review__stars {
+    display: inline-flex;
+    gap: 2px;
+    color: var(--c-line);
+  }
+
+  .review__stars :global(.star--on) {
+    color: var(--c-accent);
+    fill: currentColor !important;
+  }
+
+  .review__fake {
+    padding: 2px 10px;
+    border: 1px solid var(--c-placeholder);
+    border-radius: 999px;
+    color: var(--c-placeholder);
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .review blockquote {
+    margin: 0;
+  }
+
+  .review__author {
+    color: var(--c-muted);
+    font-weight: 600;
+  }
+
+  .reviews-todo {
+    --md-card-container-color: var(--c-bg);
+    --md-card-outline-color: var(--c-placeholder);
+    --md-card-padding: 20px;
+    display: grid;
+    gap: 16px;
+  }
+
+  .reviews-todo__text {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    color: var(--c-placeholder);
+  }
+
+  .reviews-todo__text :global(svg) {
+    flex: none;
+  }
+
+  .reviews-cta {
+    margin-block-start: 20px;
+  }
+
+  @media (min-width: 760px) {
+    .reviews-list {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

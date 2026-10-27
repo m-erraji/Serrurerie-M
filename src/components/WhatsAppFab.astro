@@ -1,0 +1,31 @@
+---
+// Bouton WhatsApp flottant. md-fab n'a pas de href (navigation en JS uniquement) :
+// on utilise md-button, qui rend un vrai <a> et fonctionne avant l'hydratation.
+// Position logique (inset-inline-end) : en bas à droite, en bas à gauche en arabe.
+import Icon from './Icon.astro';
+import type { Lang } from '../config/site';
+import { t, waHref } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  zone?: string;
+}
+const { lang, zone } = Astro.props;
+const d = t(lang);
+---
+
+<md-button class="wa-fab btn-wa" variant="filled" size="md" href={waHref(lang, zone)} target="_blank" data-cta="fab" title={d.fab.aria}>
+  <Icon slot="leading-icon" name="whatsapp" />
+  {d.fab.label}
+</md-button>
+
+<style>
+  .wa-fab {
+    position: fixed;
+    inset-block-end: max(16px, env(safe-area-inset-bottom));
+    inset-inline-end: 16px;
+    z-index: var(--md-sys-z-index-navigation, 200);
+    --md-button-container-shape: 18px;
+    filter: drop-shadow(0 6px 16px rgb(0 0 0 / 0.45));
+  }
+</style>

@@ -1,0 +1,167 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from './Hero.astro';
+import Icon from './Icon.astro';
+import Services from './Services.astro';
+import Zones from './Zones.astro';
+import Contact from './Contact.astro';
+import type { Lang } from '../config/site';
+import { t, pathFor, absolute, zoneName, type AreaSlug } from '../i18n/utils';
+import { areas } from '../i18n/areas';
+
+interface Props {
+  lang: Lang;
+  slug: AreaSlug;
+}
+const { lang, slug } = Astro.props;
+const d = t(lang);
+const c = areas[slug][lang];
+const zone = zoneName(slug, lang);
+const page = { kind: 'area', slug } as const;
+
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: d.area.breadcrumbHome, item: absolute(pathFor({ kind: 'home' }, lang)) },
+    { '@type': 'ListItem', position: 2, name: c.h1, item: absolute(pathFor(page, lang)) },
+  ],
+};
+---
+
+<Base lang={lang} page={page} title={c.title} description={c.description} zone={zone}>
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumb)} />
+
+  <nav class="container crumbs" aria-label="Breadcrumb">
+    <ol>
+      <li><a href={pathFor({ kind: 'home' }, lang)}>{d.area.breadcrumbHome}</a></li>
+      <li aria-current="page">{c.h1}</li>
+    </ol>
+  </nav>
+
+  <Hero lang={lang} title={c.h1} zone={zone} />
+
+  <section class="section area" aria-labelledby="area-title">
+    <div class="container area__grid">
+      <div class="area__text">
+        <p class="area__intro">{c.intro}</p>
+        <h2 id="area-title">{c.section.title}</h2>
+        {c.section.paragraphs.map((p) => <p>{p}</p>)}
+      </div>
+
+      <md-card variant="outlined" class="area__access">
+        <h2 class="area__access-title">{d.area.accessTitle}</h2>
+        <ul role="list">
+          {
+            c.access.map((tip) => (
+              <li>
+                <Icon name="check" size={20} />
+                <span>{tip}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </md-card>
+    </div>
+  </section>
+
+  <Services lang={lang} ids={c.services} title={d.area.servicesTitle} intro={null} />
+
+  <Contact lang={lang} zone={zone} />
+
+  <Zones lang={lang} current={slug} />
+</Base>
+
+<style>
+  .crumbs ol {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0;
+    padding: 12px 0 0;
+    color: var(--c-muted);
+    font-size: 0.95rem;
+  }
+
+  .crumbs li + li::before {
+    content: '/';
+    margin-inline-end: 6px;
+    color: var(--c-line);
+  }
+
+  .crumbs a {
+    display: inline-block;
+    padding-block: 10px;
+    color: var(--c-muted);
+  }
+
+  .crumbs li[aria-current] {
+    padding-block: 10px;
+  }
+
+  .area {
+    padding-block-start: 32px;
+  }
+
+  .area__grid {
+    display: grid;
+    gap: 24px;
+  }
+
+  .area__text {
+    display: grid;
+    gap: 16px;
+    max-inline-size: 68ch;
+  }
+
+  .area__intro {
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+
+  .area__text h2 {
+    margin-block-start: 12px;
+    font-size: clamp(1.6rem, 6vw, 2.2rem);
+  }
+
+  .area__access {
+    --md-card-container-color: var(--c-bg-card);
+    --md-card-outline-color: var(--c-accent);
+    --md-card-padding: 20px;
+    display: block;
+    align-self: start;
+  }
+
+  .area__access-title {
+    font-size: 1.4rem;
+    margin-block-end: 12px;
+  }
+
+  .area__access ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 12px;
+  }
+
+  .area__access li {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .area__access li :global(svg) {
+    flex: none;
+    margin-block-start: 3px;
+    color: var(--c-accent);
+  }
+
+  @media (min-width: 900px) {
+    .area__grid {
+      grid-template-columns: 1.4fr 1fr;
+      align-items: start;
+    }
+  }
+</style>

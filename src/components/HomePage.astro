@@ -1,0 +1,34 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from './Hero.astro';
+import TrustBar from './TrustBar.astro';
+import Services from './Services.astro';
+import Steps from './Steps.astro';
+import Technician from './Technician.astro';
+import Gallery from './Gallery.astro';
+import Reviews from './Reviews.astro';
+import Zones from './Zones.astro';
+import Faq from './Faq.astro';
+import Contact from './Contact.astro';
+import type { Lang } from '../config/site';
+import { t } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const d = t(lang);
+---
+
+<Base lang={lang} page={{ kind: 'home' }} title={d.meta.homeTitle} description={d.meta.homeDescription} rail>
+  <Hero lang={lang} />
+  <TrustBar lang={lang} />
+  <Services lang={lang} />
+  <Steps lang={lang} />
+  <Technician lang={lang} />
+  <Gallery lang={lang} />
+  <Reviews lang={lang} />
+  <Zones lang={lang} />
+  <Faq lang={lang} />
+  <Contact lang={lang} />
+</Base>

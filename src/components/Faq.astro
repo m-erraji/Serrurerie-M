@@ -1,0 +1,51 @@
+---
+import { DEMO, type Lang } from '../config/site';
+import { demo } from '../config/demo';
+import { t } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const d = t(lang);
+// Mode démo : réponses fictives de demo.ts à la place des placeholders.
+const items = d.faq.items.map((item, i) => ({ q: item.q, a: DEMO ? demo.faqAnswers[lang][i] : item.a }));
+---
+
+<section id="faq" class="section" aria-labelledby="faq-title">
+  <div class="container">
+    <div class="section__head">
+      <h2 id="faq-title">{d.faq.title}</h2>
+    </div>
+
+    <!-- Réponses : src/i18n/*.ts → faq.items. Valeurs provisoires à faire valider (voir TODO.md). -->
+    <md-accordion variant="outlined" heading-level="3" class="faq">
+      {
+        items.map((item) => (
+          <md-accordion-item headline={item.q}>
+            <p class:list={['faq__answer', item.a.startsWith('[') && 'ph']}>{item.a}</p>
+          </md-accordion-item>
+        ))
+      }
+    </md-accordion>
+  </div>
+</section>
+
+<style>
+  .faq {
+    display: block;
+    max-inline-size: 820px;
+    --md-accordion-outline-color: var(--c-line);
+    --md-accordion-item-container-color: var(--c-bg);
+    --md-accordion-item-container-color-expanded: var(--c-bg-card);
+    --md-accordion-item-header-min-height: 56px;
+  }
+
+  .faq__answer {
+    color: var(--c-muted);
+  }
+
+  .faq__answer.ph {
+    color: var(--c-placeholder);
+  }
+</style>

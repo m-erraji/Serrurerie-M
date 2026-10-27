@@ -1,0 +1,33 @@
+---
+// Plausible + événements de conversion « Appel » et « WhatsApp ».
+// Rien n'est émis tant que site.analytics.plausible.domain est vide.
+// Le suivi des clics est un script inline indépendant d'AWC : il marche dès le premier rendu,
+// y compris sur les liens rendus dans le shadow DOM (event.composedPath()).
+import { site } from '../config/site';
+
+const { domain, src } = site.analytics.plausible;
+---
+
+{
+  domain && (
+    <>
+      <script is:inline defer data-domain={domain} src={src} />
+      <script is:inline>
+        {`window.plausible=window.plausible||function(){(window.plausible.q=window.plausible.q||[]).push(arguments)};
+document.addEventListener('click',function(e){
+  var path=e.composedPath?e.composedPath():[e.target];
+  for(var i=0;i<path.length;i++){
+    var el=path[i];
+    if(!el||!el.getAttribute)continue;
+    var href=el.getAttribute('href')||el.getAttribute('data-wa')||'';
+    var goal=href.indexOf('tel:')===0?'Appel':href.indexOf('wa.me')>-1?'WhatsApp':null;
+    if(!goal)continue;
+    var host=path.find(function(n){return n&&n.dataset&&n.dataset.cta});
+    window.plausible(goal,{props:{position:host?host.dataset.cta:'autre',page:location.pathname}});
+    return;
+  }
+},true);`}
+      </script>
+    </>
+  )
+}
