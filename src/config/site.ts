@@ -18,8 +18,8 @@ export interface Service {
   icon: string;
   title: Localized;
   text: Localized;
-  /** Prix indicatif affiché sur la carte. '' = placeholder visible. Valeurs actuelles À VÉRIFIER. */
-  price: Localized;
+  /** Prix indicatif affiché sur la carte. Omis = pas de ligne de prix. '' = placeholder visible. */
+  price?: Localized;
 }
 
 export interface Zone {
@@ -203,7 +203,6 @@ const baseSite = {
         en: 'Installation and repair of keypad, card and smart locks.',
         ar: 'تركيب وإصلاح الأقفال بالرمز أو بالبطاقة أو الأقفال الذكية.',
       },
-      price: { fr: 'à partir de 400 DH', en: 'from 400 MAD', ar: 'ابتداءً من 400 درهم' },
     },
     {
       id: 'voiture',
@@ -214,7 +213,6 @@ const baseSite = {
         en: 'Keys locked in the car: we open the door where you are.',
         ar: 'مفاتيح مغلقة داخل السيارة: نفتح الباب في مكانك.',
       },
-      price: { fr: '300 DH – 600 DH', en: '300 MAD – 600 MAD', ar: '300 – 600 درهم' },
     },
   ] satisfies Service[],
 

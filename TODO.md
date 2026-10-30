@@ -29,9 +29,11 @@ Presque tout se remplit dans **`src/config/site.ts`**. Les exceptions sont indiq
 
 - [x] **Porte simple / porte blindée / voiture** → `site.services[].price` mis à jour avec la
       grille tarifaire moyenne constatée à Marrakech (claquée vs verrouillée).
+- [x] **Ouverture de voiture / Serrures électroniques** : prix volontairement masqué (pas de
+      `price` dans `site.services[]`) — aucune ligne de prix ne s'affiche sur ces deux cartes.
 - [ ] **Vérifier les autres prix indicatifs** → `site.services[].price` (fr / en / ar). Valeurs
       encore provisoires : changement 350 DH serrure comprise, clé cassée 200 DH, réparation 200 DH,
-      cambriolage sur devis, électronique 400 DH (tous « à partir de »).
+      cambriolage sur devis.
       Un prix affiché engage : corriger ce qui ne correspond pas aux vrais tarifs.
 
 ## Google

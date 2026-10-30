@@ -32,14 +32,16 @@ const services = ids ? ids.map((id) => site.services.find((s) => s.id === id)!) 
               </span>
               <h3>{s.title[lang]}</h3>
               <p class="service__text">{s.text[lang]}</p>
-              <p class="service__price">
-                {d.services.pricePrefix}{' '}
-                {isPlaceholder(s.price[lang]) ? (
-                  <span class="ph">{d.services.pricePlaceholder}</span>
-                ) : (
-                  <strong>{s.price[lang]}</strong>
-                )}
-              </p>
+              {s.price && (
+                <p class="service__price">
+                  {d.services.pricePrefix}{' '}
+                  {isPlaceholder(s.price[lang]) ? (
+                    <span class="ph">{d.services.pricePlaceholder}</span>
+                  ) : (
+                    <strong>{s.price[lang]}</strong>
+                  )}
+                </p>
+              )}
             </md-card>
           </li>
         ))
