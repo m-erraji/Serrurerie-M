@@ -19,17 +19,18 @@
 }
 
 :root {
-  --c-bg: #0a0f1c;           /* bleu nuit */
-  --c-bg-raised: #111a2e;
-  --c-bg-card: #141d31;
-  --c-line: #2a3552;
-  --c-text: #eef1f6;         /* 16.9:1 sur --c-bg */
-  --c-muted: #b8c1d3;        /* 10.6:1 sur --c-bg */
-  --c-accent: #ff7a30;       /* orange actions, 7.4:1 sur --c-bg */
-  --c-on-accent: #1a0a00;    /* texte sur orange, 7.4:1 (le blanc échoue à 2.6:1) */
+  /* Acier + laiton : anthracite métallique, accent doré (clé/serrure), plutôt que le bleu nuit + orange d'origine. */
+  --c-bg: #15171c;           /* anthracite */
+  --c-bg-raised: #1a1d24;
+  --c-bg-card: #1d2027;
+  --c-line: #2e333d;
+  --c-text: #f0f1f3;         /* 15.9:1 sur --c-bg */
+  --c-muted: #a7afc0;        /* gris acier, 8.1:1 sur --c-bg */
+  --c-accent: #c9a227;       /* laiton, 7.4:1 sur --c-bg */
+  --c-on-accent: #1a1200;    /* texte sur laiton, 7.7:1 */
   --c-wa: #25d366;
   --c-on-wa: #062a12;        /* 7.9:1 */
-  --c-placeholder: #ffd166;  /* placeholders [À COMPLÉTER] bien visibles */
+  --c-placeholder: #ffb24d;  /* ambre, distinct du laiton : placeholders [À COMPLÉTER] bien visibles, 10:1 */
 
   --font-title: 'Barlow Condensed', 'Barlow Condensed Fallback', 'Noto Kufi Arabic', sans-serif;
   --font-text: 'Barlow', 'Barlow Fallback', 'Noto Kufi Arabic', sans-serif;
@@ -46,35 +47,35 @@ html[data-theme='dark'] {
   --md-sys-color-on-background: var(--c-text);
   --md-sys-color-surface: var(--c-bg);
   --md-sys-color-on-surface: var(--c-text);
-  --md-sys-color-surface-variant: #1e2840;
+  --md-sys-color-surface-variant: #262b33;
   --md-sys-color-on-surface-variant: var(--c-muted);
-  --md-sys-color-surface-container-lowest: #070b15;
+  --md-sys-color-surface-container-lowest: #0e1013;
   --md-sys-color-surface-container-low: var(--c-bg-raised);
   --md-sys-color-surface-container: var(--c-bg-card);
-  --md-sys-color-surface-container-high: #1a2440;
-  --md-sys-color-surface-container-highest: #212c4a;
+  --md-sys-color-surface-container-high: #262b33;
+  --md-sys-color-surface-container-highest: #2d333d;
   --md-sys-color-surface-tint: var(--c-accent);
-  --md-sys-color-outline: #6b7894;        /* 4.3:1, bordures */
+  --md-sys-color-outline: #7b8498;        /* 4.8:1, bordures */
   --md-sys-color-outline-variant: var(--c-line);
 
   --md-sys-color-primary: var(--c-accent);
   --md-sys-color-on-primary: var(--c-on-accent);
   --md-sys-color-primary-container: var(--c-accent);
   --md-sys-color-on-primary-container: var(--c-on-accent);
-  --md-sys-color-inverse-primary: #a64300;
+  --md-sys-color-inverse-primary: #8a6c12;
 
-  --md-sys-color-secondary: #afc0e0;      /* anneau de focus AWC : 10.4:1 */
-  --md-sys-color-on-secondary: #0a1a33;
-  --md-sys-color-secondary-container: #22304f;
-  --md-sys-color-on-secondary-container: #e4eaf7;
+  --md-sys-color-secondary: #a8c0e8;      /* anneau de focus AWC, bleu acier : 9.7:1 */
+  --md-sys-color-on-secondary: #0d1726;
+  --md-sys-color-secondary-container: #222a38;
+  --md-sys-color-on-secondary-container: #e2e8f2;
 
   --md-sys-color-tertiary: var(--c-wa);
   --md-sys-color-on-tertiary: var(--c-on-wa);
   --md-sys-color-tertiary-container: #0f3b22;
   --md-sys-color-on-tertiary-container: #b9f5cf;
 
-  --md-sys-color-inverse-surface: #e6eaf2;
-  --md-sys-color-inverse-on-surface: #1a2033;
+  --md-sys-color-inverse-surface: #e9ebee;
+  --md-sys-color-inverse-on-surface: #1d2027;
 
   /* Typographie : Barlow Condensed (titres, libellés), Barlow (texte). */
   --md-sys-typescale-display-large-font: 800 57px/64px var(--font-title);
@@ -257,17 +258,6 @@ md-button .num,
   font-style: italic;
 }
 
-/* Bandeau du mode démo (données fictives). */
-.demo-banner {
-  margin: 0;
-  padding: 6px var(--gutter);
-  background: var(--c-placeholder);
-  color: #1a1200;
-  font-size: 0.85rem;
-  font-weight: 600;
-  text-align: center;
-}
-
 [dir='rtl'] .icon--dir {
   transform: scaleX(-1);
 }
@@ -309,6 +299,26 @@ md-button .num,
 .section__lead {
   color: var(--c-muted);
   max-inline-size: 60ch;
+}
+
+/* Plus d'air autour des sections sur grand écran : rend la page moins dense, plus premium. */
+@media (min-width: 900px) {
+  .section {
+    padding-block: 88px;
+  }
+
+  .section__head {
+    margin-block-end: 36px;
+  }
+}
+
+/* ---------- Cartes ---------- */
+
+/* Légère élévation + coins plus doux sur toutes les md-card : plus de relief sur le fond uni,
+   plus facile à distinguer du fond et des cartes voisines. */
+md-card {
+  --md-card-container-shape: 16px;
+  --md-card-container-elevation: 0 1px 2px rgb(0 0 0 / 0.35), 0 14px 32px -18px rgb(0 0 0 / 0.7);
 }
 
 .grid {

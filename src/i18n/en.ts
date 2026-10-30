@@ -47,32 +47,10 @@ export const en: Dict = {
     ],
   },
 
-  technician: {
-    title: 'Who comes to you',
-    namePlaceholder: '[Locksmith’s first name]',
-    photoAlt: 'Photo of the locksmith',
-    photoPlaceholder: '[Photo to be provided]',
-    experience: (n: number) => `${n} years of experience`,
-    experiencePlaceholder: '[Years of experience]',
-    text: 'The person who answers the phone is the person who comes to you.',
-  },
-
-  gallery: {
-    title: 'Recent work',
-    placeholder: '[Work photo to be provided]',
-  },
-
   reviews: {
     title: 'Customer reviews',
     todo: 'TODO: no reviews are shown yet. Real reviews from the Google listing will be added here.',
-    cta: 'See reviews on Google',
-    ctaPlaceholder: '[Google listing link to be completed]',
     rating: (n: number) => `Rating: ${n} out of 5`,
-  },
-
-  demo: {
-    banner: 'Demo mode: prices, times, reviews, name and photos are fictitious.',
-    fakeReview: 'Fictitious review',
   },
 
   zones: {
@@ -109,9 +87,6 @@ export const en: Dict = {
     hours: 'Hours',
     zone: 'Area',
     zoneValue: 'Marrakech and surroundings',
-    maps: 'View on Google Maps',
-    mapsPlaceholder: '[Google Maps link to be completed]',
-    legal: 'Legal notice',
     languages: 'Languages',
   },
 

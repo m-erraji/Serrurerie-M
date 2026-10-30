@@ -47,32 +47,10 @@ export const ar: Dict = {
     ],
   },
 
-  technician: {
-    title: 'من يتدخل',
-    namePlaceholder: '[اسم صانع الأقفال]',
-    photoAlt: 'صورة صانع الأقفال',
-    photoPlaceholder: '[صورة يجب توفيرها]',
-    experience: (n: number) => `${n} سنوات من الخبرة`,
-    experiencePlaceholder: '[سنوات الخبرة]',
-    text: 'الشخص الذي يجيب على الهاتف هو نفسه الذي يأتي إليك.',
-  },
-
-  gallery: {
-    title: 'أعمالنا',
-    placeholder: '[صورة عمل يجب توفيرها]',
-  },
-
   reviews: {
     title: 'آراء الزبناء',
     todo: 'TODO: لا توجد آراء معروضة حاليًا. ستُضاف هنا الآراء الحقيقية من صفحة Google.',
-    cta: 'شاهد الآراء على Google',
-    ctaPlaceholder: '[رابط صفحة Google — يجب إكماله]',
     rating: (n: number) => `التقييم: ${n} من 5`,
-  },
-
-  demo: {
-    banner: 'وضع تجريبي: الأسعار والمدد والآراء والاسم والصور كلها وهمية.',
-    fakeReview: 'رأي وهمي',
   },
 
   zones: {
@@ -109,9 +87,6 @@ export const ar: Dict = {
     hours: 'أوقات العمل',
     zone: 'المنطقة',
     zoneValue: 'مراكش ونواحيها',
-    maps: 'عرض على خرائط Google',
-    mapsPlaceholder: '[رابط خرائط Google — يجب إكماله]',
-    legal: 'الإشعار القانوني',
     languages: 'اللغات',
   },
 

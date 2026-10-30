@@ -74,12 +74,14 @@ Seuls Guéliz, Médina, Hivernage et Palmeraie ont une page dédiée, chacune av
 
 ## Contrastes (WCAG AA)
 
+Thème « acier + laiton » : fond anthracite, accent doré (évoque le métal des clés et serrures).
+
 | Paire | Ratio |
 |---|---|
-| Texte `#EEF1F6` sur fond `#0A0F1C` | 16.9:1 |
-| Texte secondaire `#B8C1D3` sur fond | 10.6:1 |
-| Orange `#FF7A30` sur fond | 7.4:1 |
-| Texte `#1A0A00` sur bouton orange | 7.4:1 (le blanc échouerait : 2.6:1) |
+| Texte `#F0F1F3` sur fond `#15171C` | 15.9:1 |
+| Texte secondaire `#A7AFC0` sur fond | 8.1:1 |
+| Laiton `#C9A227` sur fond | 7.4:1 |
+| Texte `#1A1200` sur bouton laiton | 7.7:1 |
 | Texte `#062A12` sur bouton WhatsApp `#25D366` | 7.9:1 |
 
 ## Déploiement

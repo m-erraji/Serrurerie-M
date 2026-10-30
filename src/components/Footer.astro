@@ -30,20 +30,6 @@ const hours = site.hours.label[lang];
       </div>
     </dl>
 
-    <div class="footer__links">
-      {
-        site.links.googleMaps ? (
-          <md-button variant="text" size="md" href={site.links.googleMaps} target="_blank">
-            <Icon slot="leading-icon" name="map-pin" />
-            {d.footer.maps}
-          </md-button>
-        ) : (
-          <p class="ph">{d.footer.mapsPlaceholder}</p>
-        )
-      }
-      <md-button variant="text" size="md" href={pathFor({ kind: 'legal' }, lang)}>{d.footer.legal}</md-button>
-    </div>
-
     <!-- Liens de langue en HTML simple : fonctionnent sans JS et sont lus par les moteurs. -->
     <nav class="footer__langs" aria-label={d.footer.languages}>
       {
@@ -60,7 +46,7 @@ const hours = site.hours.label[lang];
 <style>
   .site-footer {
     border-block-start: 1px solid var(--c-line);
-    background: #070b15;
+    background: #0d0e11;
     padding-block: 40px 24px;
   }
 
@@ -100,17 +86,6 @@ const hours = site.hours.label[lang];
 
   .footer__facts dd {
     margin: 4px 0 0;
-  }
-
-  .footer__links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    margin-inline-start: -12px;
-  }
-
-  .footer__links .ph {
-    padding-inline: 12px;
   }
 
   .footer__langs {

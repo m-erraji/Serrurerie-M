@@ -38,35 +38,18 @@ export const demo = {
     ] satisfies OpeningHours[],
   },
 
-  /** Prix indicatifs par identifiant de service. */
+  /** Prix indicatifs par identifiant de service : uniquement ceux encore provisoires dans site.ts
+   * (porte-simple, porte-blindée et voiture ont désormais de vrais prix vérifiés). */
   prices: {
-    ouverture: { fr: 'à partir de 250 DH', en: 'from 250 MAD', ar: 'ابتداءً من 250 درهم' },
     changement: { fr: 'à partir de 350 DH, serrure comprise', en: 'from 350 MAD, lock included', ar: 'ابتداءً من 350 درهم، مع القفل' },
     'cle-cassee': { fr: 'à partir de 200 DH', en: 'from 200 MAD', ar: 'ابتداءً من 200 درهم' },
     reparation: { fr: 'à partir de 200 DH', en: 'from 200 MAD', ar: 'ابتداءً من 200 درهم' },
     cambriolage: { fr: 'sur devis, après diagnostic', en: 'quote after inspection', ar: 'حسب التقدير بعد المعاينة' },
     electronique: { fr: 'à partir de 400 DH', en: 'from 400 MAD', ar: 'ابتداءً من 400 درهم' },
-    voiture: { fr: 'à partir de 300 DH', en: 'from 300 MAD', ar: 'ابتداءً من 300 درهم' },
   } satisfies Record<string, Localized>,
-
-  technician: {
-    firstName: 'Youssef',
-    photo: '/demo/technicien.webp',
-    yearsExperience: 12 as number | null,
-  },
-
-  gallery: [
-    { src: '/demo/realisation-1.webp', alt: { fr: 'Porte de riad en bois ouverte sans casse', en: 'Wooden riad door opened without damage', ar: 'باب رياض خشبي فُتح دون كسر' } },
-    { src: '/demo/realisation-2.webp', alt: { fr: 'Cylindre de porte blindée remplacé', en: 'Security door cylinder replaced', ar: 'تغيير أسطوانة باب مصفح' } },
-    { src: '/demo/realisation-3.webp', alt: { fr: 'Serrure électronique à code installée', en: 'Keypad lock installed', ar: 'تركيب قفل إلكتروني بالرمز' } },
-    { src: '/demo/realisation-4.webp', alt: { fr: 'Serrure multipoints réparée', en: 'Multi-point lock repaired', ar: 'إصلاح قفل متعدد النقاط' } },
-    { src: '/demo/realisation-5.webp', alt: { fr: 'Clé cassée extraite du cylindre', en: 'Broken key extracted from the cylinder', ar: 'استخراج مفتاح مكسور من الأسطوانة' } },
-    { src: '/demo/realisation-6.webp', alt: { fr: 'Porte sécurisée après effraction', en: 'Door secured after a break-in', ar: 'تأمين باب بعد محاولة سرقة' } },
-  ] satisfies { src: string; alt: Localized }[],
 
   links: {
     googleBusiness: 'https://maps.google.com/?q=Marrakech',
-    googleReviews: 'https://maps.google.com/?q=Marrakech',
     googleMaps: 'https://maps.google.com/?q=Marrakech',
   },
 
@@ -101,6 +84,27 @@ export const demo = {
       rating: 4,
       lang: 'fr',
       text: 'Trois cylindres changés après une perte de clés. Un peu d’attente à cause de la distance, mais travail propre.',
+    },
+    {
+      author: 'Fatima Z.',
+      zone: 'Hivernage',
+      rating: 5,
+      lang: 'fr',
+      text: 'Clé cassée dans la serrure un matin avant le travail. Extraite en quelques minutes sans avoir à tout changer. Rapide et honnête sur le prix.',
+    },
+    {
+      author: 'David M.',
+      zone: 'Agdal',
+      rating: 5,
+      lang: 'en',
+      text: 'Locked my keys in the car on a Friday night. He was there in about 30 minutes and opened it without a scratch on the door. Fair price, told me upfront on the phone.',
+    },
+    {
+      author: 'ياسين ب.',
+      zone: 'Targa',
+      rating: 5,
+      lang: 'ar',
+      text: 'قفل إلكتروني بالرمز توقف عن العمل. تم تشخيص المشكل وتركيب قفل جديد بالمقاس في نفس اليوم. تعامل محترم وسعر واضح من البداية.',
     },
   ] satisfies Review[],
 

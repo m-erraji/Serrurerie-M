@@ -51,7 +51,7 @@ const baseSite = {
   name: 'Serrurerie Marrakech',
 
   /** URL de production, sans slash final. Sert aux canoniques, au sitemap, à Open Graph. */
-  url: 'https://example.com',
+  url: 'https://serrurier-marrakech.ma',
 
   phone: {
     display: '06 04 01 94 95',
@@ -132,15 +132,34 @@ const baseSite = {
 
   services: [
     {
-      id: 'ouverture',
+      id: 'porte-simple',
       icon: 'door-open',
-      title: { fr: 'Ouverture de porte', en: 'Door opening', ar: 'فتح الأبواب' },
+      title: { fr: 'Porte simple', en: 'Standard door', ar: 'باب عادي' },
       text: {
-        fr: 'Porte claquée ou clé oubliée à l’intérieur : on ouvre en préservant la serrure dès que possible.',
-        en: 'Door slammed shut or keys left inside: we open it while preserving the lock whenever possible.',
-        ar: 'باب أُغلق أو مفاتيح نُسيت في الداخل: نفتحه مع الحفاظ على القفل كلما أمكن.',
+        fr: 'Porte claquée (clé restée à l’intérieur) ou verrouillée (perte de clé, crochetage ou perçage) : on ouvre en préservant la serrure dès que possible.',
+        en: 'Door slammed shut (keys left inside) or locked (lost key, picking or drilling): we open it while preserving the lock whenever possible.',
+        ar: 'باب مغلق (مفاتيح بقيت بالداخل) أو مقفل (ضياع المفتاح، فتح بدون مفتاح أو ثقب): نفتحه مع الحفاظ على القفل كلما أمكن.',
       },
-      price: { fr: 'à partir de 250 DH', en: 'from 250 MAD', ar: 'ابتداءً من 250 درهم' },
+      price: {
+        fr: 'Claquée : 150 DH – 300 DH · Verrouillée : 250 DH – 400 DH',
+        en: 'Slammed shut: 150 MAD – 300 MAD · Locked: 250 MAD – 400 MAD',
+        ar: 'مغلق: 150 – 300 درهم · مقفل: 250 – 400 درهم',
+      },
+    },
+    {
+      id: 'porte-blindee',
+      icon: 'key',
+      title: { fr: 'Porte blindée', en: 'Armored door', ar: 'باب مصفح' },
+      text: {
+        fr: 'Porte de sécurité claquée ou verrouillée : intervention adaptée aux serrures multipoints et blindées.',
+        en: 'Security door slammed shut or locked: handled with multi-point and armored lock expertise.',
+        ar: 'باب أمني مغلق أو مقفل: تدخل مناسب للأقفال المتعددة النقاط والمصفحة.',
+      },
+      price: {
+        fr: 'Claquée : 300 DH – 500 DH · Verrouillée : 450 DH – 800 DH+',
+        en: 'Slammed shut: 300 MAD – 500 MAD · Locked: 450 MAD – 800 MAD+',
+        ar: 'مغلق: 300 – 500 درهم · مقفل: 450 درهم فما فوق',
+      },
     },
     {
       id: 'changement',
@@ -206,7 +225,7 @@ const baseSite = {
         en: 'Keys locked in the car: we open the door where you are.',
         ar: 'مفاتيح مغلقة داخل السيارة: نفتح الباب في مكانك.',
       },
-      price: { fr: 'à partir de 300 DH', en: 'from 300 MAD', ar: 'ابتداءً من 300 درهم' },
+      price: { fr: '300 DH – 600 DH', en: '300 MAD – 600 MAD', ar: '300 – 600 درهم' },
     },
   ] satisfies Service[],
 
@@ -225,34 +244,9 @@ const baseSite = {
     { name: { fr: 'Agdal', en: 'Agdal', ar: 'أكدال' } },
   ] satisfies Zone[],
 
-  /** « Qui intervient ». Laisser vide = placeholder visible. */
-  technician: {
-    firstName: '',
-    /** Chemin dans /public. Actuellement une silhouette illustrée : remplacer par une vraie photo. */
-    photo: '/images/technicien.webp',
-    /** Nombre d'années d'expérience (nombre réel uniquement). */
-    yearsExperience: null as number | null,
-  },
-
-  /**
-   * Galerie de réalisations : chemins dans /public + légende. Vide = 6 emplacements placeholder.
-   * Actuellement des ILLUSTRATIONS (pas de vraies interventions) : les légendes le disent.
-   * À remplacer par de vraies photos de chantier, avec des légendes décrivant le travail réel.
-   */
-  gallery: [
-    { src: '/images/illustrations/realisation-1.webp', alt: { fr: 'Illustration : porte de riad en bois', en: 'Illustration: wooden riad door', ar: 'رسم توضيحي: باب رياض خشبي' } },
-    { src: '/images/illustrations/realisation-2.webp', alt: { fr: 'Illustration : serrure', en: 'Illustration: lock', ar: 'رسم توضيحي: قفل' } },
-    { src: '/images/illustrations/realisation-3.webp', alt: { fr: 'Illustration : serrure électronique à code', en: 'Illustration: keypad lock', ar: 'رسم توضيحي: قفل إلكتروني بالرمز' } },
-    { src: '/images/illustrations/realisation-4.webp', alt: { fr: 'Illustration : réparation de serrure', en: 'Illustration: lock repair', ar: 'رسم توضيحي: إصلاح قفل' } },
-    { src: '/images/illustrations/realisation-5.webp', alt: { fr: 'Illustration : clé cassée', en: 'Illustration: broken key', ar: 'رسم توضيحي: مفتاح مكسور' } },
-    { src: '/images/illustrations/realisation-6.webp', alt: { fr: 'Illustration : porte sécurisée', en: 'Illustration: secured door', ar: 'رسم توضيحي: باب مؤمَّن' } },
-  ] as { src: string; alt: Localized }[],
-
   links: {
     /** Fiche Google Business Profile (lien public). */
     googleBusiness: '',
-    /** Lien direct « Laisser un avis » de la fiche Google. */
-    googleReviews: '',
     /** Lien Google Maps vers l'emplacement ou la zone. */
     googleMaps: '',
   },
@@ -296,8 +290,6 @@ export const site: typeof baseSite = DEMO
       responseTime: demo.responseTime,
       hours: demo.hours,
       services: baseSite.services.map((s) => ({ ...s, price: demo.prices[s.id as keyof typeof demo.prices] ?? s.price })),
-      technician: demo.technician,
-      gallery: demo.gallery,
       links: demo.links,
       legal: demo.legal,
       reviews: demo.reviews,

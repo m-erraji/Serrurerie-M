@@ -48,32 +48,10 @@ export const fr = {
     ],
   },
 
-  technician: {
-    title: 'Qui intervient',
-    namePlaceholder: '[Prénom du serrurier]',
-    photoAlt: 'Photo du serrurier',
-    photoPlaceholder: '[Photo à fournir]',
-    experience: (n: number) => `${n} ans d’expérience`,
-    experiencePlaceholder: '[Années d’expérience]',
-    text: 'C’est la personne qui répond au téléphone et qui vient chez vous.',
-  },
-
-  gallery: {
-    title: 'Réalisations',
-    placeholder: '[Photo de réalisation à fournir]',
-  },
-
   reviews: {
     title: 'Avis clients',
     todo: 'TODO : aucun avis n’est affiché pour l’instant. Les avis réels de la fiche Google seront ajoutés ici.',
-    cta: 'Voir les avis sur Google',
-    ctaPlaceholder: '[Lien de la fiche Google à compléter]',
     rating: (n: number) => `Note : ${n} sur 5`,
-  },
-
-  demo: {
-    banner: 'Mode démo : prix, délais, avis, prénom et photos sont fictifs.',
-    fakeReview: 'Avis fictif',
   },
 
   zones: {
@@ -110,9 +88,6 @@ export const fr = {
     hours: 'Horaires',
     zone: 'Zone',
     zoneValue: 'Marrakech et environs',
-    maps: 'Voir sur Google Maps',
-    mapsPlaceholder: '[Lien Google Maps à compléter]',
-    legal: 'Mentions légales',
     languages: 'Langues',
   },
 

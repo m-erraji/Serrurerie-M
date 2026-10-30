@@ -1,9 +1,8 @@
 ---
 // Avis clients. Hors démo : uniquement des avis réels (site.reviews), sinon bloc TODO visible.
-// En mode démo, chaque avis porte l'étiquette « Avis fictif ».
 // Aucun aggregateRating n'est émis dans le JSON-LD : Google ne l'accepte pas pour des avis auto-publiés.
 import Icon from './Icon.astro';
-import { site, DEMO, type Lang } from '../config/site';
+import { site, type Lang } from '../config/site';
 import { t, dir } from '../i18n/utils';
 
 interface Props {
@@ -11,7 +10,6 @@ interface Props {
 }
 const { lang } = Astro.props;
 const d = t(lang);
-const googleLink = site.links.googleReviews || site.links.googleBusiness;
 const reviews = site.reviews;
 ---
 
@@ -33,7 +31,6 @@ const reviews = site.reviews;
                       <Icon name="star" size={18} class={i < r.rating ? 'star star--on' : 'star'} />
                     ))}
                   </span>
-                  {DEMO && <span class="review__fake">{d.demo.fakeReview}</span>}
                 </div>
                 <blockquote lang={r.lang} dir={dir(r.lang)}>
                   <p>{r.text}</p>
@@ -51,16 +48,7 @@ const reviews = site.reviews;
             <Icon name="star" size={28} />
             <p class="ph">{d.reviews.todo}</p>
           </div>
-          {!googleLink && <p class="ph">{d.reviews.ctaPlaceholder}</p>}
         </md-card>
-      )
-    }
-
-    {
-      googleLink && (
-        <md-button class="reviews-cta" variant="outlined" size="md" href={googleLink} target="_blank">
-          {d.reviews.cta}
-        </md-button>
       )
     }
   </div>
@@ -106,15 +94,6 @@ const reviews = site.reviews;
     fill: currentColor !important;
   }
 
-  .review__fake {
-    padding: 2px 10px;
-    border: 1px solid var(--c-placeholder);
-    border-radius: 999px;
-    color: var(--c-placeholder);
-    font-size: 0.8rem;
-    font-weight: 600;
-  }
-
   .review blockquote {
     margin: 0;
   }
@@ -141,10 +120,6 @@ const reviews = site.reviews;
 
   .reviews-todo__text :global(svg) {
     flex: none;
-  }
-
-  .reviews-cta {
-    margin-block-start: 20px;
   }
 
   @media (min-width: 760px) {

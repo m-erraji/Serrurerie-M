@@ -37,7 +37,7 @@ export const areas: Record<AreaSlug, Record<Lang, AreaContent>> = {
         'Précisez s’il y a un interphone, un code d’accès ou un concierge.',
         'Un repère proche (café, pharmacie, carrefour) aide à trouver l’entrée de l’immeuble.',
       ],
-      services: ['ouverture', 'changement', 'cle-cassee', 'electronique'],
+      services: ['porte-simple', 'changement', 'cle-cassee', 'electronique'],
     },
     en: {
       title: 'Locksmith in Guéliz, Marrakech – Locked out of your flat',
@@ -58,7 +58,7 @@ export const areas: Record<AreaSlug, Record<Lang, AreaContent>> = {
         'Tell us if there is an intercom, an access code or a concierge.',
         'A nearby landmark (café, pharmacy, junction) helps find the building entrance.',
       ],
-      services: ['ouverture', 'changement', 'cle-cassee', 'electronique'],
+      services: ['porte-simple', 'changement', 'cle-cassee', 'electronique'],
     },
     ar: {
       title: 'صانع أقفال في جليز، مراكش – باب الشقة مغلق',
@@ -79,7 +79,7 @@ export const areas: Record<AreaSlug, Record<Lang, AreaContent>> = {
         'أخبرنا إن كان هناك جرس داخلي أو رمز دخول أو حارس.',
         'معلم قريب (مقهى، صيدلية، ملتقى طرق) يساعد على إيجاد مدخل العمارة.',
       ],
-      services: ['ouverture', 'changement', 'cle-cassee', 'electronique'],
+      services: ['porte-simple', 'changement', 'cle-cassee', 'electronique'],
     },
   },
 
@@ -103,7 +103,7 @@ export const areas: Record<AreaSlug, Record<Lang, AreaContent>> = {
         'Envoyez votre localisation sur WhatsApp : dans les derbs, c’est souvent le plus simple.',
         'Si possible, quelqu’un peut venir chercher le serrurier au point de repère.',
       ],
-      services: ['ouverture', 'cle-cassee', 'reparation', 'changement'],
+      services: ['porte-simple', 'cle-cassee', 'reparation', 'changement'],
     },
     en: {
       title: 'Locksmith in Marrakech Medina – Riad doors',
@@ -124,7 +124,7 @@ export const areas: Record<AreaSlug, Record<Lang, AreaContent>> = {
         'Send your location on WhatsApp: in the derbs it is often the easiest way.',
         'If possible, someone can meet the locksmith at the landmark.',
       ],
-      services: ['ouverture', 'cle-cassee', 'reparation', 'changement'],
+      services: ['porte-simple', 'cle-cassee', 'reparation', 'changement'],
     },
     ar: {
       title: 'صانع أقفال في المدينة القديمة بمراكش – أبواب الرياضات',
@@ -145,7 +145,7 @@ export const areas: Record<AreaSlug, Record<Lang, AreaContent>> = {
         'أرسل موقعك عبر واتساب: في الدروب، هذه غالبًا أسهل طريقة.',
         'إن أمكن، يمكن لأحدكم أن يلتقي بصانع الأقفال عند المعلم.',
       ],
-      services: ['ouverture', 'cle-cassee', 'reparation', 'changement'],
+      services: ['porte-simple', 'cle-cassee', 'reparation', 'changement'],
     },
   },
 
@@ -169,7 +169,7 @@ export const areas: Record<AreaSlug, Record<Lang, AreaContent>> = {
         'Indiquez le nom de la résidence ou de la villa et le numéro de la porte.',
         'Pour une serrure électronique, notez la marque et le modèle (souvent visibles sur la serrure ou sur la facture).',
       ],
-      services: ['electronique', 'ouverture', 'cambriolage', 'changement'],
+      services: ['electronique', 'porte-simple', 'cambriolage', 'changement'],
     },
     en: {
       title: 'Locksmith in Hivernage, Marrakech – Residences and electronic locks',
@@ -190,7 +190,7 @@ export const areas: Record<AreaSlug, Record<Lang, AreaContent>> = {
         'Give the name of the residence or villa and the door number.',
         'For an electronic lock, note the brand and model (often shown on the lock or the invoice).',
       ],
-      services: ['electronique', 'ouverture', 'cambriolage', 'changement'],
+      services: ['electronique', 'porte-simple', 'cambriolage', 'changement'],
     },
     ar: {
       title: 'صانع أقفال في الحي الشتوي، مراكش – الإقامات والأقفال الإلكترونية',
@@ -211,7 +211,7 @@ export const areas: Record<AreaSlug, Record<Lang, AreaContent>> = {
         'أعطنا اسم الإقامة أو الفيلا ورقم الباب.',
         'بالنسبة للقفل الإلكتروني، سجّل العلامة والطراز (غالبًا ما يكونان ظاهرين على القفل أو على الفاتورة).',
       ],
-      services: ['electronique', 'ouverture', 'cambriolage', 'changement'],
+      services: ['electronique', 'porte-simple', 'cambriolage', 'changement'],
     },
   },
 
@@ -235,7 +235,7 @@ export const areas: Record<AreaSlug, Record<Lang, AreaContent>> = {
         'Indiquez le nom de la propriété ou de la maison d’hôtes, et la route ou le douar le plus proche.',
         'Précisez quelle porte est bloquée et par où le serrurier peut entrer sur la propriété.',
       ],
-      services: ['ouverture', 'changement', 'cambriolage', 'reparation'],
+      services: ['porte-simple', 'changement', 'cambriolage', 'reparation'],
     },
     en: {
       title: 'Locksmith in the Palmeraie, Marrakech – Villas and guesthouses',
@@ -256,7 +256,7 @@ export const areas: Record<AreaSlug, Record<Lang, AreaContent>> = {
         'Give the name of the property or guesthouse, and the nearest road or douar.',
         'Tell us which door is stuck and how the locksmith can get onto the property.',
       ],
-      services: ['ouverture', 'changement', 'cambriolage', 'reparation'],
+      services: ['porte-simple', 'changement', 'cambriolage', 'reparation'],
     },
     ar: {
       title: 'صانع أقفال في النخيل، مراكش – الفيلات ودور الضيافة',
@@ -277,7 +277,7 @@ export const areas: Record<AreaSlug, Record<Lang, AreaContent>> = {
         'أعطنا اسم الضيعة أو دار الضيافة، وأقرب طريق أو دوار.',
         'حدد الباب المغلق، ومن أين يمكن لصانع الأقفال الدخول إلى الملكية.',
       ],
-      services: ['ouverture', 'changement', 'cambriolage', 'reparation'],
+      services: ['porte-simple', 'changement', 'cambriolage', 'reparation'],
     },
   },
 };

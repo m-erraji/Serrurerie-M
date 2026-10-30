@@ -13,22 +13,23 @@ interface Props {
 const { lang, title, zone } = Astro.props;
 const d = t(lang);
 const facts = [site.availability[lang], site.responseTime[lang]];
+const factIcons = ['clock', 'route'] as const;
 ---
 
 <section class="hero" aria-labelledby="hero-title">
   <div class="container hero__inner">
     <h1 id="hero-title">{title ?? d.hero.title}</h1>
 
-    <p class="hero__facts">
+    <ul class="hero__facts" role="list">
       {
         facts.map((f, i) => (
-          <>
-            {i > 0 && <span class="hero__sep" aria-hidden="true">·</span>}
-            <span class:list={[isPlaceholder(f) && 'ph']}>{f}</span>
-          </>
+          <li class:list={[isPlaceholder(f) && 'ph']}>
+            <Icon name={factIcons[i]} size={18} />
+            <span>{f}</span>
+          </li>
         ))
       }
-    </p>
+    </ul>
 
     <div class="hero__actions">
       <md-button class="btn-block" variant="filled" size="md" href={telHref} data-cta="hero">
@@ -47,7 +48,7 @@ const facts = [site.availability[lang], site.responseTime[lang]];
   .hero {
     padding-block: 24px 32px;
     background:
-      radial-gradient(120% 80% at 100% 0%, rgb(255 122 48 / 0.14), transparent 60%),
+      radial-gradient(120% 80% at 100% 0%, rgb(201 162 39 / 0.14), transparent 60%),
       var(--c-bg);
   }
 
@@ -59,14 +60,33 @@ const facts = [site.availability[lang], site.responseTime[lang]];
   .hero__facts {
     display: flex;
     flex-wrap: wrap;
-    gap: 4px 10px;
-    color: var(--c-muted);
-    font-size: 1.05rem;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
 
-  .hero__sep {
+  .hero__facts li {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: var(--c-bg-raised);
+    border: 1px solid var(--c-line);
+    color: var(--c-text);
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  .hero__facts li :global(svg) {
+    flex: none;
     color: var(--c-accent);
-    font-weight: 700;
+  }
+
+  .hero__facts li.ph {
+    color: var(--c-placeholder);
+    border-color: var(--c-placeholder);
   }
 
   .hero__actions {

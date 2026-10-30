@@ -12,7 +12,7 @@ Presque tout se remplit dans **`src/config/site.ts`**. Les exceptions sont indiq
 
 ## Indispensable avant la mise en ligne
 
-- [ ] **Nom de domaine** → `site.url` (ex. `https://serrurerie-marrakech.ma`).
+- [x] **Nom de domaine** → `site.url` = `https://serrurier-marrakech.ma`.
       Sert aux URL canoniques, au sitemap, à Open Graph et au JSON-LD.
 - [ ] **Vérifier la disponibilité** → `site.availability` : actuellement « Disponible 7j/7, de 7h à 23h ».
       Valeur provisoire, à confirmer ou corriger : elle s'affiche en haut de chaque page.
@@ -25,36 +25,26 @@ Presque tout se remplit dans **`src/config/site.ts`**. Les exceptions sont indiq
 - [ ] **Mentions légales** → `site.legal` : responsable, statut, ICE, adresse, e-mail, hébergeur.
       Texte « Données personnelles » → `legal.dataText` dans `src/i18n/fr.ts`, `en.ts`, `ar.ts`.
 
-## Qui intervient
-
-- [ ] **Prénom** → `site.technician.firstName`
-- [ ] **Photo** → `public/images/technicien.webp` est une silhouette illustrée : la remplacer
-      par une vraie photo (WebP, ~400×400, même nom de fichier).
-- [ ] **Années d'expérience** → `site.technician.yearsExperience` (un nombre réel)
-
 ## Prix
 
-- [ ] **Vérifier les prix indicatifs** → `site.services[].price` (fr / en / ar). Valeurs provisoires :
-      ouverture 250 DH, changement 350 DH serrure comprise, clé cassée 200 DH, réparation 200 DH,
-      cambriolage sur devis, électronique 400 DH, voiture 300 DH (tous « à partir de »).
+- [x] **Porte simple / porte blindée / voiture** → `site.services[].price` mis à jour avec la
+      grille tarifaire moyenne constatée à Marrakech (claquée vs verrouillée).
+- [ ] **Vérifier les autres prix indicatifs** → `site.services[].price` (fr / en / ar). Valeurs
+      encore provisoires : changement 350 DH serrure comprise, clé cassée 200 DH, réparation 200 DH,
+      cambriolage sur devis, électronique 400 DH (tous « à partir de »).
       Un prix affiché engage : corriger ce qui ne correspond pas aux vrais tarifs.
 
 ## Google
 
 - [ ] **Fiche Google Business Profile** → `site.links.googleBusiness`
       (ajoute aussi `sameAs` dans le JSON-LD).
-- [ ] **Lien « laisser un avis »** → `site.links.googleReviews`
-- [ ] **Lien Google Maps** → `site.links.googleMaps` (pied de page + `hasMap` dans le JSON-LD)
+- [ ] **Lien Google Maps** → `site.links.googleMaps` (`hasMap` dans le JSON-LD)
 - [ ] **Avis clients** : aucun n'est affiché. Une fois qu'il y a de vrais avis sur Google,
-      choisir entre (a) un lien seulement (déjà en place), ou (b) recopier quelques avis réels
-      avec l'accord des auteurs dans `site.reviews` (même format que dans `demo.ts`).
+      recopier quelques avis réels avec l'accord des auteurs dans `site.reviews`
+      (même format que dans `demo.ts`).
 
 ## Photos
 
-- [ ] **Réalisations** : la galerie affiche 6 **illustrations** (`public/images/illustrations/`),
-      pas de vraies interventions. Les remplacer par 3 à 9 vraies photos (WebP, ~1200×900,
-      sans visage ni adresse visible) dans `public/images/realisations/`, et mettre à jour
-      `site.gallery` avec des légendes qui décrivent le vrai travail.
 - [ ] **Image de partage** `public/og-image.png` (1200×630) : actuellement générique
       (logo + numéro). La remplacer par une vraie photo si possible.
 
