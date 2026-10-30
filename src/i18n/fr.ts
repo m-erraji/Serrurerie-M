@@ -48,12 +48,6 @@ export const fr = {
     ],
   },
 
-  reviews: {
-    title: 'Avis clients',
-    todo: 'TODO : aucun avis n’est affiché pour l’instant. Les avis réels de la fiche Google seront ajoutés ici.',
-    rating: (n: number) => `Note : ${n} sur 5`,
-  },
-
   zones: {
     title: 'Zones d’intervention',
     hint: 'Touchez votre quartier pour nous écrire sur WhatsApp.',

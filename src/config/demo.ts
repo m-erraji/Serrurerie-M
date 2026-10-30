@@ -8,7 +8,7 @@
  * délais et mentions légales ci-dessous sont INVENTÉS.
  */
 
-import type { Lang, Localized, OpeningHours, Review } from './site';
+import type { Lang, Localized, OpeningHours } from './site';
 
 export const demo = {
   availability: {
@@ -61,52 +61,6 @@ export const demo = {
     email: 'contact@example.com',
     host: 'Hébergeur à définir (fictif)',
   },
-
-  /** Avis INVENTÉS : ne servent qu'à montrer la mise en page. */
-  reviews: [
-    {
-      author: 'Karim B.',
-      zone: 'Guéliz',
-      rating: 5,
-      lang: 'fr',
-      text: 'Porte claquée un dimanche soir avec les clés à l’intérieur. Prix donné au téléphone, respecté sur place, et la serrure n’a pas été abîmée.',
-    },
-    {
-      author: 'Sophie L.',
-      zone: 'Médina',
-      rating: 5,
-      lang: 'fr',
-      text: 'Riad au fond d’un derb : il a trouvé grâce à la localisation WhatsApp. Vieille serrure réparée au lieu d’être changée.',
-    },
-    {
-      author: 'Hamza E.',
-      zone: 'Palmeraie',
-      rating: 4,
-      lang: 'fr',
-      text: 'Trois cylindres changés après une perte de clés. Un peu d’attente à cause de la distance, mais travail propre.',
-    },
-    {
-      author: 'Fatima Z.',
-      zone: 'Hivernage',
-      rating: 5,
-      lang: 'fr',
-      text: 'Clé cassée dans la serrure un matin avant le travail. Extraite en quelques minutes sans avoir à tout changer. Rapide et honnête sur le prix.',
-    },
-    {
-      author: 'David M.',
-      zone: 'Agdal',
-      rating: 5,
-      lang: 'en',
-      text: 'Locked my keys in the car on a Friday night. He was there in about 30 minutes and opened it without a scratch on the door. Fair price, told me upfront on the phone.',
-    },
-    {
-      author: 'ياسين ب.',
-      zone: 'Targa',
-      rating: 5,
-      lang: 'ar',
-      text: 'قفل إلكتروني بالرمز توقف عن العمل. تم تشخيص المشكل وتركيب قفل جديد بالمقاس في نفس اليوم. تعامل محترم وسعر واضح من البداية.',
-    },
-  ] satisfies Review[],
 
   /** Réponses de FAQ fictives, dans l'ordre de faq.items. */
   faqAnswers: {

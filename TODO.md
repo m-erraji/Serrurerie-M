@@ -39,9 +39,6 @@ Presque tout se remplit dans **`src/config/site.ts`**. Les exceptions sont indiq
 - [ ] **Fiche Google Business Profile** → `site.links.googleBusiness`
       (ajoute aussi `sameAs` dans le JSON-LD).
 - [ ] **Lien Google Maps** → `site.links.googleMaps` (`hasMap` dans le JSON-LD)
-- [ ] **Avis clients** : aucun n'est affiché. Une fois qu'il y a de vrais avis sur Google,
-      recopier quelques avis réels avec l'accord des auteurs dans `site.reviews`
-      (même format que dans `demo.ts`).
 
 ## Photos
 

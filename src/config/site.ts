@@ -36,17 +36,6 @@ export interface OpeningHours {
   closes: string; // "20:00"
 }
 
-export interface Review {
-  /** Prénom + initiale, tel qu'affiché sur Google. */
-  author: string;
-  zone: string;
-  /** Note sur 5. */
-  rating: number;
-  /** Langue dans laquelle l'avis a été écrit (il est affiché tel quel). */
-  lang: Lang;
-  text: string;
-}
-
 const baseSite = {
   name: 'Serrurerie Marrakech',
 
@@ -261,12 +250,6 @@ const baseSite = {
     host: '[Hébergeur du site]',
   },
 
-  /**
-   * Avis clients RÉELS uniquement, recopiés de la fiche Google avec l'accord des auteurs.
-   * Vide = bloc TODO + lien vers la fiche Google.
-   */
-  reviews: [] as Review[],
-
   /** Mesure d'audience. Plausible est désactivé tant que `domain` est vide. */
   analytics: {
     plausible: {
@@ -292,7 +275,6 @@ export const site: typeof baseSite = DEMO
       services: baseSite.services.map((s) => ({ ...s, price: demo.prices[s.id as keyof typeof demo.prices] ?? s.price })),
       links: demo.links,
       legal: demo.legal,
-      reviews: demo.reviews,
     }
   : baseSite;
 

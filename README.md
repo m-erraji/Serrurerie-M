@@ -28,11 +28,9 @@ npm run build:demo     # → dist-demo/
 npm run preview:demo
 ```
 
-Le mode démo remplit les placeholders avec des données **inventées** : prix, délais, horaires, prénom, photos (des illustrations), avis, réponses de FAQ et mentions légales. Il sert à montrer le site avant d'avoir les vraies informations.
+Le mode démo remplit les placeholders avec des données **inventées** : prix, délais, horaires, réponses de FAQ et mentions légales. Il sert à montrer le site avant d'avoir les vraies informations.
 
-- Chaque page affiche un bandeau jaune « données fictives ».
 - Chaque page porte `noindex, nofollow`.
-- Chaque avis est étiqueté « Avis fictif ».
 
 **Ne pas déployer `dist-demo/` comme site public.**
 

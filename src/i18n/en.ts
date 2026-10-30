@@ -47,12 +47,6 @@ export const en: Dict = {
     ],
   },
 
-  reviews: {
-    title: 'Customer reviews',
-    todo: 'TODO: no reviews are shown yet. Real reviews from the Google listing will be added here.',
-    rating: (n: number) => `Rating: ${n} out of 5`,
-  },
-
   zones: {
     title: 'Areas we cover',
     hint: 'Tap your neighbourhood to message us on WhatsApp.',
