@@ -1,121 +1,15 @@
 ---
 import Icon from './Icon.astro';
-import { site, LANGS, isPlaceholder, type Lang } from '../config/site';
+import { site, LANGS, type Lang } from '../config/site';
 import { t, pathFor, dicts, type PageId } from '../i18n/utils';
-
-interface Props {
-  lang: Lang;
-  page: PageId;
-}
+import { design } from '../i18n/design';
+interface Props { lang: Lang; page: PageId; }
 const { lang, page } = Astro.props;
-const d = t(lang);
-const hours = site.hours.label[lang];
+const d = t(lang), c = design[lang];
+const home = pathFor({kind:'home'},lang);
 ---
-
-<footer class="site-footer">
-  <div class="container footer">
-    <div class="footer__brand">
-      <Icon name="key" size={28} />
-      <p>{site.name}</p>
-    </div>
-
-    <dl class="footer__facts">
-      <div>
-        <dt><Icon name="clock" size={18} />{d.footer.hours}</dt>
-        <dd class:list={[isPlaceholder(hours) && 'ph']}>{hours}</dd>
-      </div>
-      <div>
-        <dt><Icon name="map-pin" size={18} />{d.footer.zone}</dt>
-        <dd>{d.footer.zoneValue}</dd>
-      </div>
-    </dl>
-
-    <!-- Liens de langue en HTML simple : fonctionnent sans JS et sont lus par les moteurs. -->
-    <nav class="footer__langs" aria-label={d.footer.languages}>
-      {
-        LANGS.map((l) => (
-          <a href={pathFor(page, l)} hreflang={l} lang={l} aria-current={l === lang ? 'page' : undefined}>
-            {dicts[l].langName}
-          </a>
-        ))
-      }
-    </nav>
-  </div>
-</footer>
-
-<style>
-  .site-footer {
-    border-block-start: 1px solid var(--c-line);
-    background: #0d0e11;
-    padding-block: 40px 24px;
-  }
-
-  .footer {
-    display: grid;
-    gap: 24px;
-  }
-
-  .footer__brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: var(--c-accent);
-  }
-
-  .footer__brand p {
-    font: 800 1.4rem/1 var(--font-title);
-    text-transform: uppercase;
-    color: var(--c-text);
-  }
-
-  .footer__facts {
-    display: grid;
-    gap: 16px;
-    margin: 0;
-  }
-
-  .footer__facts dt {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    color: var(--c-muted);
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-
-  .footer__facts dd {
-    margin: 4px 0 0;
-  }
-
-  .footer__langs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px 20px;
-    padding-block-start: 16px;
-    border-block-start: 1px solid var(--c-line);
-  }
-
-  .footer__langs a {
-    display: inline-flex;
-    align-items: center;
-    min-block-size: 44px;
-    color: var(--c-muted);
-  }
-
-  .footer__langs a[aria-current='page'] {
-    color: var(--c-text);
-    font-weight: 700;
-    text-decoration: none;
-  }
-
-  html[lang='ar'] .footer__facts dt {
-    letter-spacing: 0;
-  }
-
-  @media (min-width: 760px) {
-    .footer {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-</style>
+<footer class="site-footer"><div class="container"><div class="footer__main">
+  <div class="footer__brand"><a class="logo" href={home}><span class="logo__mark"><Icon name="key" size={26}/></span><span class="logo__text">Serrurerie<span>MARRAKECH</span></span></a><p>{c.footerText}</p></div>
+  <nav class="footer__nav" aria-label={d.a11y.sections}><a href={home+'#services'}>{d.rail.services}</a><a href={home+'#zones'}>{d.rail.zones}</a><a href={home+'#faq'}>{d.rail.faq}</a><a href={home+'#contact'}>{d.rail.contact}</a></nav>
+  <div class="footer__hours"><span>{d.footer.hours}</span><p>{site.hours.label[lang]}</p><p>{d.footer.zoneValue}</p></div>
+</div><div class="footer__bottom"><p>© {new Date().getFullYear()} {site.name}. {c.rights}</p><a href={pathFor({kind:'legal'},lang)}>{c.legal}</a><nav class="footer__langs" aria-label={d.footer.languages}>{LANGS.map(l => <a href={pathFor(page,l)} hreflang={l} lang={l} aria-current={l === lang ? 'page' : undefined}>{dicts[l].langName}</a>)}</nav></div></div></footer>

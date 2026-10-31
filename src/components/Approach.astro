@@ -1,0 +1,13 @@
+---
+import Icon from './Icon.astro';
+import type { Lang } from '../config/site';
+import { waHref } from '../i18n/utils';
+import { design } from '../i18n/design';
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const c = design[lang];
+---
+<section id="approach" class="section approach" aria-labelledby="approach-title"><div class="container approach__grid">
+  <div class="approach__photos"><img class="approach__main-photo" src="/images/photos/keys.jpg" width="600" height="900" loading="lazy" alt={c.keyAlt}/><figure><img src="/images/photos/smart-lock.jpg" width="600" height="900" loading="lazy" alt={c.smartAlt}/><figcaption>{c.photoNote}</figcaption></figure><span class="approach__seal"><Icon name="key" size={32}/><span>SERRURERIE<br/>MARRAKECH</span></span></div>
+  <div class="approach__copy"><p class="eyebrow">{c.approachEyebrow}</p><h2 id="approach-title">{c.approachTitle}</h2><p class="section__lead">{c.approachText}</p><ul>{c.approachItems.map(item => <li><Icon name="check" size={18}/>{item}</li>)}</ul><a class="text-link" href={waHref(lang)} target="_blank" rel="noopener noreferrer" data-cta="approach">{c.message}<Icon name="chevron" size={18}/></a></div>
+</div></section>

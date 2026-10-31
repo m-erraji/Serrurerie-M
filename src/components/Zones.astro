@@ -2,113 +2,14 @@
 import Icon from './Icon.astro';
 import { site, type Lang } from '../config/site';
 import { t, telHref, waHref, pathFor, type AreaSlug } from '../i18n/utils';
-
-interface Props {
-  lang: Lang;
-  /** Quartier courant (page quartier) : exclu de la liste des liens. */
-  current?: AreaSlug;
-}
+import { design } from '../i18n/design';
+interface Props { lang: Lang; current?: AreaSlug; }
 const { lang, current } = Astro.props;
-const d = t(lang);
-const pages = site.zones.filter((z) => z.page && z.page !== current);
+const d = t(lang), c = design[lang];
+const pages = site.zones.filter(z => z.page && z.page !== current);
 ---
-
-<section id="zones" class="section section--alt" aria-labelledby="zones-title">
-  <div class="container">
-    <div class="section__head">
-      <h2 id="zones-title">{d.zones.title}</h2>
-      <p class="section__lead">{d.zones.hint}</p>
-    </div>
-
-    <!-- md-chip n'a pas de href : le script client ouvre data-wa (WhatsApp avec le quartier pré-rempli). -->
-    <ul class="chips" role="list">
-      {
-        site.zones.map((z) => (
-          <li>
-            <md-chip variant="assist" appearance="outlined" data-wa={waHref(lang, z.name[lang])} data-cta="zones">
-              <Icon slot="leading-icon" name="map-pin" size={18} />
-              {z.name[lang]}
-            </md-chip>
-          </li>
-        ))
-      }
-    </ul>
-
-    <p class="zones__more">
-      {d.zones.notListed}{' '}
-      <a href={telHref} data-cta="zones"><span class="num">{site.phone.display}</span></a>
-    </p>
-
-    {
-      pages.length > 0 && (
-        <nav class="zones__pages" aria-labelledby="zones-pages-title">
-          <h3 id="zones-pages-title">{d.zones.pagesTitle}</h3>
-          <ul role="list">
-            {pages.map((z) => (
-              <li>
-                <md-button variant="text" size="md" href={pathFor({ kind: 'area', slug: z.page! }, lang)}>
-                  {d.zones.pageLink(z.name[lang])}
-                  <Icon slot="trailing-icon" name="chevron" />
-                </md-button>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      )
-    }
-  </div>
-</section>
-
-<style>
-  .chips {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-
-  md-chip {
-    --md-chip-container-height: 44px;
-    --md-chip-outline-color: var(--c-line);
-    --md-chip-label-color: var(--c-text);
-    --md-chip-icon-color: var(--c-accent);
-    --md-chip-container-color: var(--c-bg);
-  }
-
-  .zones__more {
-    margin-block-start: 20px;
-    font-weight: 600;
-  }
-
-  .zones__more a {
-    display: inline-block;
-    padding-block: 10px;
-    font-weight: 700;
-  }
-
-  .zones__pages {
-    margin-block-start: 28px;
-    padding-block-start: 20px;
-    border-block-start: 1px solid var(--c-line);
-  }
-
-  .zones__pages h3 {
-    margin-block-end: 8px;
-  }
-
-  .zones__pages ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px 8px;
-    margin-inline-start: -12px;
-  }
-
-  .zones__pages md-button {
-    --md-button-label-color: var(--c-accent);
-  }
-</style>
+<section id="zones" class="section zones-section" aria-labelledby="zones-title"><div class="container zones__grid">
+  <div class="zones__copy"><p class="eyebrow">{c.zonesEyebrow}</p><h2 id="zones-title">{c.zonesTitle}</h2><p class="section__lead">{c.zonesText}</p><p class="zones__hint">{d.zones.hint}</p><ul class="chips" role="list">{site.zones.map(z => <li><a href={waHref(lang,z.name[lang])} target="_blank" rel="noopener noreferrer" data-cta="zones"><Icon name="map-pin" size={15}/>{z.name[lang]}</a></li>)}</ul><p class="zones__more">{d.zones.notListed} <a class="num" href={telHref}>{site.phone.display}</a></p></div>
+  <div class="zones__visual"><img src="/images/photos/marrakech.jpg" width="1200" height="800" loading="lazy" alt={c.cityAlt}/><div class="zones__caption"><Icon name="map-pin" size={20}/><span>Marrakech · مراكش</span></div></div>
+  {pages.length > 0 && <nav class="zones__pages" aria-label={d.zones.pagesTitle}>{pages.map(z => <a href={pathFor({kind:'area',slug:z.page!},lang)}>{d.zones.pageLink(z.name[lang])}<Icon name="chevron" size={15}/></a>)}</nav>}
+</div></section>

@@ -1,100 +1,17 @@
 ---
 import Icon from './Icon.astro';
 import { site, isPlaceholder, type Lang } from '../config/site';
-import { t } from '../i18n/utils';
-
-interface Props {
-  lang: Lang;
-  /** Sous-ensemble de services (pages quartier). Par défaut : tous. */
-  ids?: string[];
-  title?: string;
-  intro?: string | null;
-}
+import { t, waHref } from '../i18n/utils';
+import { design } from '../i18n/design';
+interface Props { lang: Lang; ids?: string[]; title?: string; intro?: string | null; }
 const { lang, ids, title, intro } = Astro.props;
-const d = t(lang);
-const services = ids ? ids.map((id) => site.services.find((s) => s.id === id)!) : site.services;
+const d = t(lang), c = design[lang];
+const services = ids ? ids.map(id => site.services.find(s => s.id === id)!).filter(Boolean) : site.services;
+const primary = services.slice(0,4), extra = services.slice(4);
 ---
-
-<section id="services" class="section" aria-labelledby="services-title">
-  <div class="container">
-    <div class="section__head">
-      <h2 id="services-title">{title ?? d.services.title}</h2>
-      {intro !== null && <p class="section__lead">{intro ?? d.services.intro}</p>}
-    </div>
-
-    <ul class="grid services" role="list">
-      {
-        services.map((s) => (
-          <li>
-            <md-card variant="filled" class="service">
-              <span class="service__icon">
-                <Icon name={s.icon as any} size={28} />
-              </span>
-              <h3>{s.title[lang]}</h3>
-              <p class="service__text">{s.text[lang]}</p>
-              {s.price && (
-                <p class="service__price">
-                  {d.services.pricePrefix}{' '}
-                  {isPlaceholder(s.price[lang]) ? (
-                    <span class="ph">{d.services.pricePlaceholder}</span>
-                  ) : (
-                    <strong>{s.price[lang]}</strong>
-                  )}
-                </p>
-              )}
-            </md-card>
-          </li>
-        ))
-      }
-    </ul>
-  </div>
-</section>
-
-<style>
-  .services {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .services li {
-    display: flex;
-  }
-
-  .service {
-    --md-card-container-color: var(--c-bg-card);
-    --md-card-padding: 20px;
-    display: block;
-    inline-size: 100%;
-  }
-
-  .service h3 {
-    margin-block: 14px 6px;
-  }
-
-  .service__icon {
-    display: grid;
-    place-items: center;
-    inline-size: 52px;
-    block-size: 52px;
-    border-radius: 14px;
-    background: rgb(201 162 39 / 0.14);
-    color: var(--c-accent);
-  }
-
-  .service__text {
-    color: var(--c-muted);
-  }
-
-  .service__price {
-    margin-block-start: 12px;
-    padding-block-start: 12px;
-    border-block-start: 1px solid var(--c-line);
-    font-size: 0.95rem;
-    color: var(--c-muted);
-  }
-
-  .service__price strong {
-    color: var(--c-text);
-  }
-</style>
+<section id="services" class="section services-section" aria-labelledby="services-title"><div class="container">
+  <div class="section__head section__head--split"><div><p class="eyebrow">{c.serviceEyebrow}</p><h2 id="services-title">{title ?? c.serviceTitle}</h2></div>{intro !== null && <p class="section__lead">{intro ?? d.services.intro}</p>}</div>
+  <ul class="services-grid" role="list">{primary.map((s,i) => <li class="service"><div class="service__top"><span class="service__icon"><Icon name={s.icon as any} size={27}/></span><span class="service__index">0{i+1}</span></div><h3>{s.title[lang]}</h3><p class="service__text">{s.text[lang]}</p><p class="service__price"><span>{s.price ? d.services.pricePrefix : c.quote}</span>{s.price && <strong class:list={[isPlaceholder(s.price[lang]) && 'ph']}>{s.price[lang]}</strong>}</p><a class="service__link" href={waHref(lang)+encodeURIComponent(' — '+s.title[lang])} target="_blank" rel="noopener noreferrer" data-cta="service">{c.request}<Icon name="chevron" size={17}/><span class="sr-only"> — {s.title[lang]}</span></a></li>)}</ul>
+  {extra.length > 0 && <details class="more-services"><summary><span class="when-closed">{c.moreServices}</span><span class="when-open">{c.lessServices}</span><span aria-hidden="true">+</span></summary><ul class="services-grid" role="list">{extra.map(s => <li class="service service--compact"><span class="service__icon"><Icon name={s.icon as any} size={25}/></span><h3>{s.title[lang]}</h3><p class="service__text">{s.text[lang]}</p><p class="service__price"><strong>{s.price?.[lang] ?? c.quote}</strong></p><a class="service__link" href={waHref(lang)+encodeURIComponent(' — '+s.title[lang])} target="_blank" rel="noopener noreferrer" data-cta="service">{c.request}<Icon name="chevron" size={17}/><span class="sr-only"> — {s.title[lang]}</span></a></li>)}</ul></details>}
+  <p class="price-note"><Icon name="info" size={15}/>{c.priceNote}</p>
+</div></section>

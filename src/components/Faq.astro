@@ -1,51 +1,12 @@
 ---
 import { DEMO, type Lang } from '../config/site';
 import { demo } from '../config/demo';
-import { t } from '../i18n/utils';
-
-interface Props {
-  lang: Lang;
-}
+import { t, telHref } from '../i18n/utils';
+import { design } from '../i18n/design';
+import Icon from './Icon.astro';
+interface Props { lang: Lang; }
 const { lang } = Astro.props;
-const d = t(lang);
-// Mode démo : réponses fictives de demo.ts à la place des placeholders.
-const items = d.faq.items.map((item, i) => ({ q: item.q, a: DEMO ? demo.faqAnswers[lang][i] : item.a }));
+const d = t(lang), c = design[lang];
+const items = d.faq.items.map((item,i) => ({q:item.q,a:DEMO ? demo.faqAnswers[lang][i] : item.a}));
 ---
-
-<section id="faq" class="section" aria-labelledby="faq-title">
-  <div class="container">
-    <div class="section__head">
-      <h2 id="faq-title">{d.faq.title}</h2>
-    </div>
-
-    <!-- Réponses : src/i18n/*.ts → faq.items. Valeurs provisoires à faire valider (voir TODO.md). -->
-    <md-accordion variant="outlined" heading-level="3" class="faq">
-      {
-        items.map((item) => (
-          <md-accordion-item headline={item.q}>
-            <p class:list={['faq__answer', item.a.startsWith('[') && 'ph']}>{item.a}</p>
-          </md-accordion-item>
-        ))
-      }
-    </md-accordion>
-  </div>
-</section>
-
-<style>
-  .faq {
-    display: block;
-    max-inline-size: 820px;
-    --md-accordion-outline-color: var(--c-line);
-    --md-accordion-item-container-color: var(--c-bg);
-    --md-accordion-item-container-color-expanded: var(--c-bg-card);
-    --md-accordion-item-header-min-height: 56px;
-  }
-
-  .faq__answer {
-    color: var(--c-muted);
-  }
-
-  .faq__answer.ph {
-    color: var(--c-placeholder);
-  }
-</style>
+<section id="faq" class="section" aria-labelledby="faq-title"><div class="container faq__grid"><div class="faq__intro"><p class="eyebrow">{c.faqEyebrow}</p><h2 id="faq-title">{c.faqTitle}</h2><p class="section__lead">{c.faqText}</p><a class="text-link" href={telHref}><Icon name="phone" size={18}/>{d.hero.callNow}</a></div><div class="faq">{items.map(item => <details name="faq"><summary>{item.q}<span class="faq__plus" aria-hidden="true">+</span></summary><p class:list={['faq__answer',item.a.startsWith('[') && 'ph']}>{item.a}</p></details>)}</div></div></section>

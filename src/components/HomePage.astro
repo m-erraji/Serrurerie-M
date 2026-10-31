@@ -7,6 +7,7 @@ import Steps from './Steps.astro';
 import Zones from './Zones.astro';
 import Faq from './Faq.astro';
 import Contact from './Contact.astro';
+import Approach from './Approach.astro';
 import type { Lang } from '../config/site';
 import { t } from '../i18n/utils';
 
@@ -17,10 +18,11 @@ const { lang } = Astro.props;
 const d = t(lang);
 ---
 
-<Base lang={lang} page={{ kind: 'home' }} title={d.meta.homeTitle} description={d.meta.homeDescription} rail>
+<Base lang={lang} page={{ kind: 'home' }} title={d.meta.homeTitle} description={d.meta.homeDescription}>
   <Hero lang={lang} />
   <TrustBar lang={lang} />
   <Services lang={lang} />
+  <Approach lang={lang} />
   <Steps lang={lang} />
   <Zones lang={lang} />
   <Faq lang={lang} />
