@@ -2,94 +2,17 @@
 import Icon from './Icon.astro';
 import { site, type Lang } from '../config/site';
 import { t, telHref, waHref } from '../i18n/utils';
-
-interface Props {
-  lang: Lang;
-  zone?: string;
-}
+import { design } from '../i18n/design';
+interface Props { lang: Lang; zone?: string; }
 const { lang, zone } = Astro.props;
-const d = t(lang);
+const d = t(lang), c = design[lang];
 ---
-
-<section id="contact" class="section contact" aria-labelledby="contact-title">
-  <div class="container">
-    <div class="section__head">
-      <h2 id="contact-title">{d.contact.title}</h2>
-      <p class="section__lead">{d.contact.lead}</p>
-    </div>
-
-    <md-card variant="filled" class="contact__card">
-      <a class="contact__number num" href={telHref} data-cta="contact">{site.phone.display}</a>
-      <p class="contact__intl">
-        {d.contact.international} <span class="num">{site.phone.international}</span>
-      </p>
-
-      <div class="contact__actions">
-        <md-button variant="filled" size="md" href={telHref} data-cta="contact">
-          <Icon slot="leading-icon" name="phone" />
-          {d.contact.call}
-        </md-button>
-        <md-button class="btn-wa" variant="filled" size="md" href={waHref(lang, zone)} target="_blank" data-cta="contact">
-          <Icon slot="leading-icon" name="whatsapp" />
-          {d.contact.whatsapp}
-        </md-button>
-        <!-- Révélé par le script client seulement si le presse-papiers est disponible. -->
-        <md-button id="copy-number" variant="outlined" size="md" data-number={site.phone.display} hidden>
-          <Icon slot="leading-icon" name="copy" />
-          {d.contact.copy}
-        </md-button>
-      </div>
-    </md-card>
-  </div>
-</section>
-
-<md-snackbar id="copy-toast" message={d.contact.copied} position="bottom-start"></md-snackbar>
-
-<style>
-  .contact__card {
-    --md-card-container-color: var(--c-bg-card);
-    --md-card-padding: 24px 20px;
-    display: grid;
-    gap: 8px;
-  }
-
-  .contact__number {
-    justify-self: start;
-    font: 800 clamp(2.4rem, 12vw, 4rem) / 1.05 var(--font-title);
-    color: var(--c-text);
-    text-decoration: none;
-    letter-spacing: 0.02em;
-  }
-
-  [dir='rtl'] .contact__number {
-    justify-self: end;
-  }
-
-  .contact__intl {
-    color: var(--c-muted);
-  }
-
-  .contact__actions {
-    display: grid;
-    gap: 12px;
-    margin-block-start: 16px;
-  }
-
-  .contact__actions md-button {
-    inline-size: 100%;
-  }
-
-  .contact__actions md-button[hidden] {
-    display: none;
-  }
-
-  @media (min-width: 640px) {
-    .contact__actions {
-      grid-template-columns: repeat(3, max-content);
-    }
-
-    .contact__actions md-button {
-      inline-size: auto;
-    }
-  }
-</style>
+<section id="contact" class="section contact" aria-labelledby="contact-title"><div class="container contact__grid">
+  <div><p class="eyebrow">{c.contactEyebrow}</p><h2 id="contact-title">{c.contactTitle}</h2><p class="contact__lead">{c.contactText}</p><p class="contact__hint"><Icon name="globe" size={16}/>{c.contactHint}</p></div>
+  <div class="contact__card"><p class="contact__hours"><i class="status-dot"></i>{site.hours.label[lang]}</p><a class="contact__number num" href={telHref} data-cta="contact">{site.phone.display}</a><p class="contact__intl">{d.contact.international} <span class="num">{site.phone.international}</span></p><div class="contact__actions"><a class="button button--gold" href={telHref} data-cta="contact"><Icon name="phone" size={18}/>{d.hero.callNow}</a><a class="button button--light-outline" href={waHref(lang,zone)} target="_blank" rel="noopener noreferrer" data-cta="contact"><Icon name="whatsapp" size={20}/>{d.contact.whatsapp}</a></div><button id="copy-number" class="copy-button" data-number={site.phone.display} data-success={d.contact.copied} data-error={c.copyError} hidden><Icon name="copy" size={14}/>{d.contact.copy}</button><p id="copy-status" class="copy-status" role="status"></p></div>
+</div></section>
+<script>
+const button = document.querySelector<HTMLButtonElement>('#copy-number');
+const status = document.getElementById('copy-status');
+if(button && navigator.clipboard) { button.hidden = false; button.addEventListener('click',async () => { try { await navigator.clipboard.writeText(button.dataset.number!); if(status) status.textContent = button.dataset.success!; } catch { if(status) status.textContent = button.dataset.error!; } }); }
+</script>

@@ -1,107 +1,16 @@
 ---
 import Icon from './Icon.astro';
-import { site, isPlaceholder, type Lang } from '../config/site';
+import { site, type Lang } from '../config/site';
 import { t, telHref, waHref } from '../i18n/utils';
-
-interface Props {
-  lang: Lang;
-  /** Titre propre à une page quartier ; par défaut l'accroche de l'accueil. */
-  title?: string;
-  /** Quartier pour le message WhatsApp pré-rempli. */
-  zone?: string;
-}
+import { design } from '../i18n/design';
+interface Props { lang: Lang; title?: string; zone?: string; }
 const { lang, title, zone } = Astro.props;
-const d = t(lang);
-const facts = [site.availability[lang], site.responseTime[lang]];
-const factIcons = ['clock', 'route'] as const;
+const d = t(lang), c = design[lang];
 ---
-
-<section class="hero" aria-labelledby="hero-title">
-  <div class="container hero__inner">
-    <h1 id="hero-title">{title ?? d.hero.title}</h1>
-
-    <ul class="hero__facts" role="list">
-      {
-        facts.map((f, i) => (
-          <li class:list={[isPlaceholder(f) && 'ph']}>
-            <Icon name={factIcons[i]} size={18} />
-            <span>{f}</span>
-          </li>
-        ))
-      }
-    </ul>
-
-    <div class="hero__actions">
-      <md-button class="btn-block" variant="filled" size="md" href={telHref} data-cta="hero">
-        <Icon slot="leading-icon" name="phone" />
-        {d.hero.callNow}
-      </md-button>
-      <md-button class="btn-block btn-wa" variant="filled" size="md" href={waHref(lang, zone)} target="_blank" data-cta="hero">
-        <Icon slot="leading-icon" name="whatsapp" />
-        {d.hero.whatsapp}
-      </md-button>
-    </div>
+<section class="hero" aria-labelledby="hero-title"><div class="container hero__grid">
+  <div class="hero__copy"><p class="eyebrow"><span></span>{c.eyebrow}</p><h1 id="hero-title">{title ?? c.title}{!title && <em>{c.accent}</em>}</h1><p class="hero__intro">{c.intro}</p>
+    <div class="hero__actions"><a class="button" href={telHref} data-cta="hero"><Icon name="phone" size={19}/>{d.hero.callNow}<Icon name="chevron" size={16}/></a><a class="button button--outline" href={waHref(lang,zone)} target="_blank" rel="noopener noreferrer" data-cta="hero"><Icon name="whatsapp" size={20}/>{d.contact.whatsapp}</a></div>
+    <p class="hero__note"><Icon name="check" size={17}/>{site.trust[0].text[lang]}</p><a class="hero__discover" href="#services">{c.discover}<span aria-hidden="true">↓</span></a>
   </div>
-</section>
-
-<style>
-  .hero {
-    padding-block: 24px 32px;
-    background:
-      radial-gradient(120% 80% at 100% 0%, rgb(201 162 39 / 0.14), transparent 60%),
-      var(--c-bg);
-  }
-
-  .hero__inner {
-    display: grid;
-    gap: 16px;
-  }
-
-  .hero__facts {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .hero__facts li {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 14px;
-    border-radius: 999px;
-    background: var(--c-bg-raised);
-    border: 1px solid var(--c-line);
-    color: var(--c-text);
-    font-size: 0.95rem;
-    font-weight: 600;
-  }
-
-  .hero__facts li :global(svg) {
-    flex: none;
-    color: var(--c-accent);
-  }
-
-  .hero__facts li.ph {
-    color: var(--c-placeholder);
-    border-color: var(--c-placeholder);
-  }
-
-  .hero__actions {
-    display: grid;
-    gap: 12px;
-    margin-block-start: 4px;
-  }
-
-  @media (min-width: 640px) {
-    .hero {
-      padding-block: 56px 64px;
-    }
-
-    .hero__actions {
-      grid-template-columns: repeat(2, max-content);
-    }
-  }
-</style>
+  <div class="hero__visual"><img class="hero__photo" src="/images/photos/door-handle.jpg" alt={c.imageAlt} width="933" height="1400" fetchpriority="high"/><div class="hero__image-caption"><span>01 / MARRAKECH</span><p>{c.imageNote}</p></div><div class="hero__badge"><span class="hero__badge-icon"><Icon name="shield" size={27}/></span><div><strong>{site.responseTime[lang]}</strong><span>{site.hours.label[lang]}</span></div></div></div>
+</div></section>

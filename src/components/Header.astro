@@ -2,118 +2,34 @@
 import Icon from './Icon.astro';
 import { site, LANGS, type Lang } from '../config/site';
 import { t, pathFor, telHref, dicts, type PageId } from '../i18n/utils';
-
-interface Props {
-  lang: Lang;
-  page: PageId;
-}
+import { design } from '../i18n/design';
+interface Props { lang: Lang; page: PageId; }
 const { lang, page } = Astro.props;
-const d = t(lang);
+const d = t(lang), c = design[lang];
+const home = pathFor({ kind: 'home' }, lang);
+const links = [{ label: c.home, href: home }, { label: d.rail.services, href: home + '#services' }, { label: c.expertise, href: home + '#approach' }, { label: d.rail.zones, href: home + '#zones' }];
 ---
-
-<md-app-bar class="site-header" variant="small">
-  <a slot="headline" class="logo" href={pathFor({ kind: 'home' }, lang)} aria-label={d.a11y.home}>
-    <Icon name="key" size={28} class="logo__key" />
-    <span class="logo__text" aria-hidden="true">
-      <span>Serrurerie</span>
-      <span class="logo__accent">Marrakech</span>
-    </span>
-  </a>
-
-  <md-icon-button
-    slot="trailing"
-    id="lang-trigger"
-    class="lang-trigger"
-    aria-label={d.a11y.language}
-  >
-    <!-- span : md-icon-button force fill sur ::slotted(svg), ce qui remplirait l'icône au trait -->
-    <span class="lang-trigger__icon"><Icon name="globe" /></span>
-  </md-icon-button>
-
-  <md-button slot="trailing" class="header-call" variant="filled" size="sm" href={telHref} data-cta="header">
-    <Icon slot="leading-icon" name="phone" />
-    <span class="sr-only">{d.header.call} </span><span class="header-call__long" aria-hidden="true">{d.header.call} </span><span class="num">{site.phone.display}</span>
-  </md-button>
-</md-app-bar>
-
-<md-menu id="lang-menu" anchor="lang-trigger" placement="bottom-end" aria-label={d.a11y.language}>
-  {
-    LANGS.map((l) => (
-      <md-menu-item headline={dicts[l].langName} selected={l === lang} data-href={pathFor(page, l)} lang={l} />
-    ))
-  }
-</md-menu>
-
-<style>
-  .site-header {
-    position: sticky;
-    inset-block-start: 0;
-    z-index: var(--md-sys-z-index-app-bar, 100);
-    --md-app-bar-container-color: var(--c-bg);
-    --md-app-bar-container-color-scrolled: var(--c-bg);
-    --md-app-bar-row-height: var(--header-h);
-    --md-app-bar-padding-inline-start: 12px;
-    --md-app-bar-padding-inline-end: 8px;
-    --md-app-bar-trailing-gap: 4px;
-    border-block-end: 1px solid var(--c-line);
-  }
-
-  .logo {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    min-block-size: 48px;
-    color: var(--c-text);
-    text-decoration: none;
-  }
-
-  .logo__key {
-    color: var(--c-accent);
-    flex: none;
-  }
-
-  .logo__text {
-    display: grid;
-    font: 800 16px/1.05 'Barlow Condensed', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-  }
-
-  .lang-trigger__icon {
-    display: grid;
-    place-items: center;
-  }
-
-  .logo__accent {
-    color: var(--c-accent);
-  }
-
-  .lang-trigger {
-    --md-icon-button-container-width: 48px;
-    --md-icon-button-container-height: 48px;
-    --md-icon-button-icon-color: var(--c-muted);
-  }
-
-  .header-call {
-    --md-button-min-height: 48px;
-    --md-button-height: 48px;
-  }
-
-  .header-call__long {
-    display: none;
-  }
-
-  /* 360 px : clé masquée, bouton réduit au numéro (le mot « Appeler » reste lu par les lecteurs d'écran). */
-  @media (max-width: 379px) {
-    .logo__key {
-      display: none;
-    }
-  }
-
-  @media (min-width: 520px) {
-    .header-call__long {
-      display: inline;
-      margin-inline-end: 0.3em;
-    }
-  }
-</style>
+<div class="topbar"><div class="container topbar__inner"><span><Icon name="map-pin" size={14} />{c.local}</span><span><i class="status-dot"></i>{site.availability[lang]}</span></div></div>
+<header class="site-header">
+  <div class="container header__inner">
+    <a class="logo" href={home} aria-label={d.a11y.home}><span class="logo__mark"><Icon name="key" size={28} /></span><span class="logo__text">Serrurerie<span>MARRAKECH</span></span></a>
+    <nav class="desktop-nav" aria-label={d.a11y.sections}>{links.map(link => <a href={link.href}>{link.label}</a>)}</nav>
+    <div class="header__actions">
+      <details class="language-picker"><summary aria-label={d.a11y.language}><Icon name="globe" size={17}/><span>{lang.toUpperCase()}</span><Icon name="chevron" size={12}/></summary><nav aria-label={d.a11y.language}>{LANGS.map(l => <a href={pathFor(page,l)} lang={l} hreflang={l} aria-current={l === lang ? 'page' : undefined}>{dicts[l].langName}</a>)}</nav></details>
+      <a class="button button--small header-call" href={telHref} data-cta="header"><Icon name="phone" size={17}/><span class="num">{site.phone.display}</span></a>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label={c.menu} data-open-label={c.menu} data-close-label={c.close}><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <nav id="mobile-nav" class="mobile-nav" aria-label={d.a11y.sections} hidden>{links.map(link => <a href={link.href}>{link.label}<Icon name="chevron" size={16}/></a>)}<a href={home+'#contact'}>{d.rail.contact}<Icon name="phone" size={16}/></a></nav>
+</header>
+<noscript><style>.menu-toggle{display:none}.mobile-nav[hidden]{display:block!important}@media(min-width:1050px){.mobile-nav[hidden]{display:none!important}}</style></noscript>
+<script>
+const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+const nav = document.getElementById('mobile-nav');
+const close = () => { if(toggle && nav) { toggle.setAttribute('aria-expanded','false'); toggle.setAttribute('aria-label',toggle.dataset.openLabel!); nav.hidden = true; } };
+toggle?.addEventListener('click', () => { if(!nav) return; const open = toggle.getAttribute('aria-expanded') !== 'true'; toggle.setAttribute('aria-expanded',String(open)); toggle.setAttribute('aria-label',(open ? toggle.dataset.closeLabel : toggle.dataset.openLabel)!); nav.hidden = !open; });
+nav?.querySelectorAll('a').forEach(a => a.addEventListener('click',close));
+document.addEventListener('keydown',e => { if(e.key === 'Escape') { if(toggle?.getAttribute('aria-expanded') === 'true') { close(); toggle.focus(); } document.querySelectorAll<HTMLDetailsElement>('.language-picker[open]').forEach(el => { el.open = false; el.querySelector('summary')?.focus(); }); } });
+document.addEventListener('click',e => { document.querySelectorAll<HTMLDetailsElement>('.language-picker[open]').forEach(el => { if(!el.contains(e.target as Node)) el.open = false; }); });
+window.matchMedia('(min-width: 1050px)').addEventListener('change',e => { if(e.matches) close(); });
+</script>
